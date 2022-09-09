@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-'''
-Downloads virtual tours from matterport.
-Usage is either running this program with the URL/pageid as an argument or calling the initiateDownload(URL/pageid) method.
-'''
 import requests
 import json
 import threading
@@ -12,6 +8,7 @@ from urllib.parse import urlparse
 import pathlib
 import re
 import os
+import os.path
 import shutil
 import sys
 import time
@@ -20,6 +17,15 @@ from tqdm import tqdm
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import decimal
 
+
+for p in ["showcase.js","js/showcase.js"]:
+    if os.path.isfile(p):
+        with open(p,"r",encoding="UTF-8") as f:
+            j = f.read()
+        with open(p,"w",encoding="UTF-8") as f:
+            f.write(re.sub(r"\&\&\(!e.expires\|\|.{1,10}\*e.expires>Date.now\(\)\)","",j))
+        print("Patched!")
+        
 # Weird hack
 accessurls = []
 SHOWCASE_INTERNAL_NAME = "showcase-internal.js"
