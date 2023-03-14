@@ -1,3 +1,4 @@
+#!/bin/bash
 clear
 cd ~
 ############### Tham số cần thay đổi ở đây ###################
@@ -19,8 +20,6 @@ echo "dbhost name: e.g: localhost"   # Tên Db host connector
 read -e dbhost
 echo "Your email for access control SSL/TLS from Let's Encrypt: e.g: youremail@filerun.com" # Địa chỉ email của bạn để quản lý SSL/TLS
 read -e youremail
-
-
 
 GitFILERUNversion="FileRun.zip"
 
@@ -349,3 +348,5 @@ echo '	  location ~ ^/(doc|sql|setup)/{'>> /etc/nginx/conf.d/$FQDN.conf
 echo '		deny all;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '	  }'>> /etc/nginx/conf.d/$FQDN.conf
 echo '}'>> /etc/nginx/conf.d/$FQDN.conf
+
+Fi
