@@ -194,40 +194,40 @@ echo '[ffi]' >> /etc/php/8.1/fpm/php.ini
 
 #Save and close the file. 
 #We need to create a second PHP ini file, Safe a PHP.ini old before create a new PHP 8.1 .ini configure
-sudo cp /etc/php/8.1/fpt/conf.d/10-ioncube.ini /etc/php/8.1/fpt/conf.d/10-ioncube_old.ini
-sudo rm /etc/php/8.1/fpt/conf.d/10-ioncube.ini
+sudo cp /etc/php/8.1/fpm/conf.d/10-ioncube.ini /etc/php/8.1/fpm/conf.d/10-ioncube_old.ini
+sudo rm /etc/php/8.1/fpm/conf.d/10-ioncube.ini
 #Add the following lines. This is to change some of the default PHP configurations:
-echo 'expose_php = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'error_reporting = E_ALL & ~E_NOTICE' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'display_errors = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'display_startup_errors = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'log_errors = On' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'ignore_repeated_errors = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'allow_url_fopen = On' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'allow_url_include = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'variables_order = "GPCS"' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'allow_webdav_methods = On' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'memory_limit = 1200M' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'max_execution_time = 600' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'output_buffering = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'output_handler = ""' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'zlib.output_compression = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'zlib.output_handler = ""' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'safe_mode = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'register_globals = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'magic_quotes_gpc = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'upload_max_filesize = 100M' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'post_max_size = 4096M' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'enable_dl = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'disable_functions = ""' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'disable_classes = ""' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'session.save_handler = files' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'session.use_cookies = 1' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'session.use_only_cookies = 1' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'session.auto_start = 0' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'session.cookie_lifetime = 0' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'session.cookie_httponly = 1' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
-echo 'date.timezone = "Asia/Ho_Chi_Minh"' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
+echo 'expose_php = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'error_reporting = E_ALL & ~E_NOTICE' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'display_errors = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'display_startup_errors = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'log_errors = On' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'ignore_repeated_errors = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'allow_url_fopen = On' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'allow_url_include = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'variables_order = "GPCS"' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'allow_webdav_methods = On' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'memory_limit = 1200M' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'max_execution_time = 600' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'output_buffering = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'output_handler = ""' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'zlib.output_compression = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'zlib.output_handler = ""' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'safe_mode = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'register_globals = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'magic_quotes_gpc = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'upload_max_filesize = 100M' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'post_max_size = 4096M' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'enable_dl = Off' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'disable_functions = ""' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'disable_classes = ""' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'session.save_handler = files' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'session.use_cookies = 1' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'session.use_only_cookies = 1' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'session.auto_start = 0' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'session.cookie_lifetime = 0' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'session.cookie_httponly = 1' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
+echo 'date.timezone = "Asia/Ho_Chi_Minh"' >> /etc/php/8.1/fpm/conf.d/10-ioncube.ini
 
 #Save and close the file. Then restart Nginx and PHP8.1-FPM.
 sudo systemctl restart nginx php8.1-fpm.service
@@ -245,6 +245,7 @@ sudo apt-get -y install wget
 wget -O $GitFILERUNversion https://filerun.com/download-latest
 sudo apt install unzip
 sudo rm -rf /var/www/html/$FQDN/
+
 sudo mkdir -p /var/www/html/$FQDN/
 sudo unzip $GitFILERUNversion -d /var/www/html/$FQDN/
 sudo chown www-data:www-data /var/www/html/$FQDN/ -R
@@ -274,8 +275,9 @@ mysql -uroot -prootpassword -e "exit";
 
 
 #Step 8. Configure NGINX
-#Next, you will need to create an Nginx virtual host configuration file to host SEO:
-#$ nano /etc/nginx/conf.d/$FQDN.conf
+#Next, you will need to create an Nginx virtual host configuration file to host FileRun:
+sudo cp /etc/nginx/conf.d/$FQDN.conf /etc/nginx/conf.d/$FQDN.conf_old
+sudo rm /etc/nginx/conf.d/$FQDN.conf
 
 echo 'server {'  >> /etc/nginx/conf.d/$FQDN.conf
 echo '    root '/var/www/html/${FQDN}';'>> /etc/nginx/conf.d/$FQDN.conf
@@ -286,8 +288,7 @@ echo '    autoindex off;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    location / {'>> /etc/nginx/conf.d/$FQDN.conf
 echo '        try_files $uri $uri/ =404;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    }'>> /etc/nginx/conf.d/$FQDN.conf
-echo '    client_max_body_size 500M;'>> /etc/nginx/conf.d/$FQDN.conf
-echo '        #enable gzip compression:'>> /etc/nginx/conf.d/$FQDN.conf
+echo '    #enable gzip compression:'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    gzip on;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    gzip_vary on;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '    gzip_min_length 1000;'>> /etc/nginx/conf.d/$FQDN.conf
