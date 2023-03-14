@@ -436,8 +436,8 @@ sudo certbot --nginx --agree-tos --redirect --hsts --staple-ocsp --email $yourem
 #After clicking Next, the install wizard will automatically create a user account. Click Next to continue.
 #On the next screen, you can log in with the superuser account. Upon first login, you need to create a home folder for the superuser account.
 #You can create the home folder for superuser with the following command.
-#sudo mkdir /var/www/superuser
-#sudo chown www-data /var/www/superuser/ -R
+sudo mkdir /var/www/html/$FQDN/superuser
+sudo chown www-data /var/www/html/$FQDN/superuser/ -R
 #Then enter the folder path in FileRun web interface. And save the changes.
 # Next, go to Security -> API to enable the API, so client apps can sync with the server.
 #Install FileRun Desktop Sync Client:
