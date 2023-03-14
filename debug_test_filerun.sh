@@ -255,6 +255,11 @@ sudo mariadb
 #Step 7. Create FileRun Database
 #Log into MySQL and create database for FileRun.
 #!/bin/bash
+mysql -uroot -prootpassword -e "DROP DATABASE $dbname";
+mysql -uroot -prootpassword -e "DROP USER '$dbuser'@'$dbhost'";
+mysql -uroot -prootpassword -e "exit";
+
+mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass'";
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
 mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass'";
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'$dbhost'";
@@ -315,5 +320,41 @@ echo '	  location ~ ^/(doc|sql|setup)/{'>> /etc/nginx/conf.d/$FQDN.conf
 echo '		deny all;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '	  }'>> /etc/nginx/conf.d/$FQDN.conf
 echo '}'>> /etc/nginx/conf.d/$FQDN.conf
+
+
+#Step 9. Setup and Configure PhpMyAdmin
+sudo apt update
+sudo apt install phpmyadmin
+
+#Step 10. gỡ bỏ apache:
+sudo service apache2 stop
+sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
+sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
+
+sudo apt-get autoremove
+whereis apache2
+apache2: /etc/apache2
+sudo rm -rf /etc/apache2
+
+sudo ln -s /usr/share/phpmyadmin /var/www/html/$FQDN/$phpmyadmin
+sudo chown -R root:root /var/lib/phpmyadmin
+sudo nginx -t
+
+#Step 11. Nâng cấp PhpmyAdmin lên version 5.2:
+sudo mv /usr/share/phpmyadmin/ /usr/share/phpmyadmin.bak
+sudo mkdir /usr/share/phpmyadmin/
+cd /usr/share/phpmyadmin/
+sudo wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
+sudo tar xzf phpMyAdmin-5.2.0-all-languages.tar.gz
+#Once extracted, list folder.
+ls
+#You should see a new folder phpMyAdmin-5.2.0-all-languages
+#We want to move the contents of this folder to /usr/share/phpmyadmin
+sudo mv phpMyAdmin-5.2.0-all-languages/* /usr/share/phpmyadmin
+ls /usr/share/phpmyadmin
+mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin 
+
+sudo systemctl restart nginx
+systemctl restart php1.0-fpm.service
 
 fi
