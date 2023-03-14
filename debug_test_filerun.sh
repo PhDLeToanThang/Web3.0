@@ -193,40 +193,42 @@ echo '[curl]' >> /etc/php/8.1/fpm/php.ini
 echo '[openssl]' >> /etc/php/8.1/fpm/php.ini
 echo '[ffi]' >> /etc/php/8.1/fpm/php.ini
 
-#Save and close the file. We need to create a second PHP ini file:
+#Save and close the file. 
+#We need to create a second PHP ini file, Safe a PHP.ini old before create a new PHP 8.1 .ini configure
+cp /etc/php/8.1/fpt/conf.d/10-ioncube.ini /etc/php/8.1/fpt/conf.d/10-ioncube_old.ini
 sudo nano /etc/php/8.1/fpt/conf.d/10-ioncube.ini
 #Add the following lines. This is to change some of the default PHP configurations:
-expose_php = Off
-error_reporting = E_ALL & ~E_NOTICE
-display_errors = Off
-display_startup_errors = Off
-log_errors = On
-ignore_repeated_errors = Off
-allow_url_fopen = On
-allow_url_include = Off
-variables_order = "GPCS"
-allow_webdav_methods = On
-memory_limit = 1200M
-max_execution_time = 600
-output_buffering = Off
-output_handler = ""
-zlib.output_compression = Off
-zlib.output_handler = ""
-safe_mode = Off
-register_globals = Off
-magic_quotes_gpc = Off
-upload_max_filesize = 100M
-post_max_size = 4096M
-enable_dl = Off
-disable_functions = ""
-disable_classes = ""
-session.save_handler = files
-session.use_cookies = 1
-session.use_only_cookies = 1
-session.auto_start = 0
-session.cookie_lifetime = 0
-session.cookie_httponly = 1
-date.timezone = "Asia/Ho_Chi_Minh"
+echo 'expose_php = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'error_reporting = E_ALL & ~E_NOTICE' >> /etc/php/8.1/fpm/php.ini
+echo 'display_errors = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'display_startup_errors = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'log_errors = On' >> /etc/php/8.1/fpm/php.ini
+echo 'ignore_repeated_errors = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'allow_url_fopen = On' >> /etc/php/8.1/fpm/php.ini
+echo 'allow_url_include = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'variables_order = "GPCS"' >> /etc/php/8.1/fpm/php.ini
+echo 'allow_webdav_methods = On' >> /etc/php/8.1/fpm/php.ini
+echo 'memory_limit = 1200M' >> /etc/php/8.1/fpm/php.ini
+echo 'max_execution_time = 600' >> /etc/php/8.1/fpm/php.ini
+echo 'output_buffering = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'output_handler = ""' >> /etc/php/8.1/fpm/php.ini
+echo 'zlib.output_compression = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'zlib.output_handler = ""' >> /etc/php/8.1/fpm/php.ini
+echo 'safe_mode = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'register_globals = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'magic_quotes_gpc = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'upload_max_filesize = 100M' >> /etc/php/8.1/fpm/php.ini
+echo 'post_max_size = 4096M' >> /etc/php/8.1/fpm/php.ini
+echo 'enable_dl = Off' >> /etc/php/8.1/fpm/php.ini
+echo 'disable_functions = ""' >> /etc/php/8.1/fpm/php.ini
+echo 'disable_classes = ""' >> /etc/php/8.1/fpm/php.ini
+echo 'session.save_handler = files' >> /etc/php/8.1/fpm/php.ini
+echo 'session.use_cookies = 1' >> /etc/php/8.1/fpm/php.ini
+echo 'session.use_only_cookies = 1' >> /etc/php/8.1/fpm/php.ini
+echo 'session.auto_start = 0' >> /etc/php/8.1/fpm/php.ini
+echo 'session.cookie_lifetime = 0' >> /etc/php/8.1/fpm/php.ini
+echo 'session.cookie_httponly = 1' >> /etc/php/8.1/fpm/php.ini
+echo 'date.timezone = "Asia/Ho_Chi_Minh"' >> /etc/php/8.1/fpm/php.ini
 
 #Save and close the file. Then restart Nginx and PHP8.1-FPM.
 sudo systemctl restart nginx php8.1-fpm.service
