@@ -335,7 +335,7 @@ sudo ln -s /usr/share/phpmyadmin /var/www/html/$FQDN/$phpmyadmin
 sudo chown -R root:root /var/lib/phpmyadmin
 sudo nginx -t
 
-#Step 11. Nâng cấp PhpmyAdmin lên version 5.2.1:
+#Step 11. Upgrade PhpmyAdmin lên version 5.2.1:
 sudo mv /usr/share/phpmyadmin/ /usr/share/phpmyadmin.bak
 sudo mkdir /usr/share/phpmyadmin/
 cd /usr/share/phpmyadmin/
