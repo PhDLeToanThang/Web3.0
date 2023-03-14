@@ -315,4 +315,4 @@ echo '		deny all;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '	  }'>> /etc/nginx/conf.d/$FQDN.conf
 echo '}'>> /etc/nginx/conf.d/$FQDN.conf
 
-Fi
+fi
