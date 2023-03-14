@@ -232,7 +232,6 @@ echo 'date.timezone = "Asia/Ho_Chi_Minh"' >> /etc/php/8.1/fpm/conf.d/10-ioncube.
 #Save and close the file. Then restart Nginx and PHP8.1-FPM.
 sudo systemctl restart nginx php8.1-fpm.service
 
-
 #Step 6. Download & Install FileRun to /opt folder
 #We will be using Git to install/update the FileRun Core Application 
 sudo apt install git
@@ -251,7 +250,6 @@ sudo unzip $GitFILERUNversion -d /var/www/html/$FQDN/
 sudo chown www-data:www-data /var/www/html/$FQDN/ -R
 sudo mysql
 sudo mariadb
-
 
 #Step 7. Create FileRun Database
 #Log into MySQL and create database for FileRun.
@@ -272,7 +270,6 @@ mysql -uroot -prootpassword -e "exit";
 #create user filerun@localhost identified by 'your-password';
 #grant all privileges on filerun.* to filerun@localhost;
 #flush privileges;
-
 
 #Step 8. Configure NGINX
 #Next, you will need to create an Nginx virtual host configuration file to host FileRun:
@@ -320,8 +317,7 @@ echo '		deny all;'>> /etc/nginx/conf.d/$FQDN.conf
 echo '	  }'>> /etc/nginx/conf.d/$FQDN.conf
 echo '}'>> /etc/nginx/conf.d/$FQDN.conf
 
-
-#Step 9. Setup and Configure PhpMyAdmin
+#Step 9. Setup and Configure PhpMyAdmin:
 sudo apt update
 sudo apt install phpmyadmin
 
@@ -345,15 +341,17 @@ sudo mkdir /usr/share/phpmyadmin/
 cd /usr/share/phpmyadmin/
 sudo wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz
 sudo tar xzf phpMyAdmin-5.2.1-all-languages.tar.gz
+
 #Once extracted, list folder.
-ls
 #You should see a new folder phpMyAdmin-5.2.1-all-languages
 #We want to move the contents of this folder to /usr/share/phpmyadmin
 sudo mv phpMyAdmin-5.2.1-all-languages/* /usr/share/phpmyadmin
-ls /usr/share/phpmyadmin
-mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin 
+
+mkdir -p /usr/share/phpmyadmin/tmp   # tạo thư mục cache cho phpmyadmin 
 
 sudo systemctl restart nginx
 systemctl restart php8.1-fpm.service
+
+
 
 fi
