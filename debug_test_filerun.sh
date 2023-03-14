@@ -321,7 +321,7 @@ echo '}'>> /etc/nginx/conf.d/$FQDN.conf
 sudo apt update
 sudo apt install phpmyadmin
 
-#Step 10. gỡ bỏ apache:
+#Step 10. Uninstall apache:
 sudo service apache2 stop
 sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common
 sudo apt-get purge apache2 apache2-utils apache2-bin apache2.2-common
