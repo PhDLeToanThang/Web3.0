@@ -39,8 +39,8 @@ wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.t
 sudo tar -xzf ioncube_loaders_lin_x86-64.tar.gz -C /usr/lib/php
 
 #Step 4: #If you use Nginx, edit the php.ini file: Open PHP-FPM config file. Safe a PHP.ini old before create a new PHP 8.1 .ini configure
-cp /etc/php/8.1/fpm/php.ini /etc/php/8.1/fpm/php_old.ini
-#sudo nano /etc/php/8.1/fpm/php.ini
+sudo cp /etc/php/8.1/fpm/php.ini /etc/php/8.1/fpm/php_old.ini
+sudo rm /etc/php/8.1/fpm/php.ini
 #Add/Update the values as shown. You may change it as per your requirement.
 # if new php.ini configure then clear sign sharp # comment
 echo '[PHP]' >> /etc/php/8.1/fpm/php.ini
@@ -194,8 +194,8 @@ echo '[ffi]' >> /etc/php/8.1/fpm/php.ini
 
 #Save and close the file. 
 #We need to create a second PHP ini file, Safe a PHP.ini old before create a new PHP 8.1 .ini configure
-cp /etc/php/8.1/fpt/conf.d/10-ioncube.ini /etc/php/8.1/fpt/conf.d/10-ioncube_old.ini
-#sudo nano /etc/php/8.1/fpt/conf.d/10-ioncube.ini
+sudo cp /etc/php/8.1/fpt/conf.d/10-ioncube.ini /etc/php/8.1/fpt/conf.d/10-ioncube_old.ini
+sudo rm /etc/php/8.1/fpt/conf.d/10-ioncube.ini
 #Add the following lines. This is to change some of the default PHP configurations:
 echo 'expose_php = Off' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
 echo 'error_reporting = E_ALL & ~E_NOTICE' >> /etc/php/8.1/fpt/conf.d/10-ioncube.ini
@@ -244,9 +244,10 @@ sudo apt-get -y install wget
 
 wget -O $GitFILERUNversion https://filerun.com/download-latest
 sudo apt install unzip
-sudo mkdir -p /var/www/$FQDN/
-sudo unzip $GitFILERUNversion -d /var/www/$FQDN/
-sudo chown www-data:www-data /var/www/$FQDN/ -R
+sudo rm -rf /var/www/html/$FQDN/
+sudo mkdir -p /var/www/html/$FQDN/
+sudo unzip $GitFILERUNversion -d /var/www/html/$FQDN/
+sudo chown www-data:www-data /var/www/html/$FQDN/ -R
 sudo mysql
 sudo mariadb
 
