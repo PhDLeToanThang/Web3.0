@@ -355,6 +355,6 @@ ls /usr/share/phpmyadmin
 mkdir /usr/share/phpMyAdmin/tmp   # tạo thư mục cache cho phpmyadmin 
 
 sudo systemctl restart nginx
-systemctl restart php1.0-fpm.service
+systemctl restart php8.1-fpm.service
 
 fi
