@@ -84,6 +84,7 @@ sudo apt update
 sudo apt install php8.1-fpm php8.1-common php8.1-mbstring php8.1-xmlrpc php8.1-soap php8.1-gd php8.1-xml php8.1-intl php8.1-mysql php8.1-cli php8.1-mcrypt php8.1-ldap php8.1-zip php8.1-curl php8.1-bz2 imagemagick ffmpeg php-imagick php8.1-json php8.1-curl
 
 #Filerun uses ionCube to encrypt its PHP file, so we need to install the ionCube PHP loader to decrypt the PHP files. Dowload ionCube loaders.
+rm /opt/ioncube_loaders_lin_x86-64.tar.gz
 wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 
 #Extract it to /usr/lib/php/:
@@ -109,7 +110,7 @@ echo 'zend.enable_gc = On' >> /etc/php/8.1/fpm/php.ini
 echo 'zend.exception_ignore_args = On' >> /etc/php/8.1/fpm/php.ini
 echo 'zend.exception_string_param_max_len = 0' >> /etc/php/8.1/fpm/php.ini
 echo '#Add the following line right below the [PHP] line:' >> /etc/php/8.1/fpm/php.ini
-echo 'zend_extension=/usr/lib/php/ioncube/ioncube_loader_lin_8.1.so' >> /etc/php/8.1/fpm/php.ini
+echo 'zend_extension= /usr/lib/php/ioncube/ioncube_loader_lin_8.1.so' >> /etc/php/8.1/fpm/php.ini
 echo 'expose_php = Off' >> /etc/php/8.1/fpm/php.ini
 echo 'max_execution_time = 360' >> /etc/php/8.1/fpm/php.ini
 echo 'max_input_time = 120' >> /etc/php/8.1/fpm/php.ini
@@ -147,6 +148,8 @@ echo 'extension=fileinfo' >> /etc/php/8.1/fpm/php.ini
 echo 'extension=intl' >> /etc/php/8.1/fpm/php.ini
 echo 'extension=mbstring' >> /etc/php/8.1/fpm/php.ini
 echo 'extension=openssl' >> /etc/php/8.1/fpm/php.ini
+echo '[ionCube Loader]' >> /etc/php/8.1/fpm/php.ini
+echo 'zend_extension = "/usr/lib/php/ioncube/ioncube_loader_lin_8.1.so"' >> /etc/php/8.1/fpm/php.ini
 echo '[CLI Server]' >> /etc/php/8.1/fpm/php.ini
 echo 'cli_server.color = On' >> /etc/php/8.1/fpm/php.ini
 echo '[Date]' >> /etc/php/8.1/fpm/php.ini
@@ -310,9 +313,8 @@ sudo apt-get -y install wget
 
 wget -O $GitFILERUNversion https://filerun.com/download-latest
 sudo apt install unzip
-sudo rm -rf /var/www/html/$FQDN/
-
-sudo mkdir -p /var/www/html/$FQDN/
+sudo rm -rf /var/www/html/$FQDN
+sudo mkdir -p /var/www/html/$FQDN
 sudo unzip $GitFILERUNversion -d /var/www/html/$FQDN/
 sudo chown www-data:www-data /var/www/html/$FQDN/ -R
 sudo mysql
@@ -323,17 +325,12 @@ sudo mariadb
 #!/bin/bash
 mysql -uroot -prootpassword -e "DROP DATABASE $dbname";
 mysql -uroot -prootpassword -e "DROP USER '$dbuser'@'$dbhost'";
-mysql -uroot -prootpassword -e "exit";
-
 mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass'";
 mysql -uroot -prootpassword -e "CREATE DATABASE $dbname CHARACTER SET utf8 COLLATE utf8_unicode_ci";
 mysql -uroot -prootpassword -e "CREATE USER '$dbuser'@'$dbhost' IDENTIFIED BY '$dbpass'";
 mysql -uroot -prootpassword -e "GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'$dbhost'";
 mysql -uroot -prootpassword -e "FLUSH PRIVILEGES";
 mysql -uroot -prootpassword -e "SHOW DATABASES";
-mysql -uroot -prootpassword -e "exit";
-
-mysql -uroot -prootpassword -e "exit";
 mysql -uroot -prootpassword -e "exit";
 
 #Step 8. Configure NGINX
