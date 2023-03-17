@@ -1,1 +1,62 @@
 #Install deploy dockers / Portrainer in Ubuntu Linux
+# Step 1. Install Nginx, MariaDB, and PHP 8.0 using the following command:
+   
+   sudo apt-get update
+   sudo apt-get install nginx mariadb-server php8.0-fpm php8.0-mysql
+   
+# Step 2. Create a new database for Dashy in MariaDB:
+   sudo mysql -u root -p
+   CREATE DATABASE dashboard.cloud.edu.vn;
+   GRANT ALL PRIVILEGES ON dashy.* TO 'dashyuser'@'localhost' IDENTIFIED BY 'password';
+   FLUSH PRIVILEGES;
+   EXIT;
+
+# Step 3. Download the latest version of Dashy from the official repository:
+  cd /opt
+  wget https://github.com/Lissy93/personal-dashboard/archive/refs/tags/v1.2.tar.gz
+  tar -zxvf v1.2.tar.gz
+  
+# Step 4. Move the extracted files to the web server directory:
+    sudo mv personal-dashboard-1.2 /var/www/html/dashboard.cloud.edu.vn
+    cd /var/www/html/dashboard.cloud.edu.vn/
+    cp .env.example .env
+    composer install --no-dev --optimize-autoloader
+    php artisan key:generate
+    php artisan migrate:fresh --seed 
+    chown -R www-data:www-data /var/www/html/dashboard.cloud.edu.vn/
+
+# Step 5. Configure Nginx to serve Dashy by creating a new configuration file in `/etc/nginx/sites-available` directory:
+   
+sudo nano /etc/nginx/sites-available/dashboard.cloud.edu.vn.conf
+
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/html/dashboard.cloud.edu.vn/public;
+        index index.php index.html index.htm;
+
+        server_name dashboard.cloud.edu.vn;
+
+        location / {
+                try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php8.0-fpm.sock;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
+
+        location ~ /\.ht {
+                deny all;
+        }
+}
+```
+
+# Step 6. Enable the newly created configuration file by creating a symbolic link in `/etc/nginx/sites-enabled` directory:
+sudo ln -s /etc/nginx/sites-available/dashboard.cloud.edu.vn.conf /etc/nginx/sites-enabled/
+
+# Step 7. Test Nginx configuration and restart Nginx service:
+sudo nginx -t
+sudo systemctl restart nginx.service
