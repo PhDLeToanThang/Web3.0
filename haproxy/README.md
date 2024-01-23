@@ -1,2 +1,4 @@
-# Web3.0
-3D VR, 3D Tuor, 360 degree Panorama, hololens emulator, iSIM, Simulator, SMART CITIES &amp; BIM Technologies
+# HAProxy
+* LOAD_BALANCER USING HAPROXY ON NGINX WEB_SERVER
+
+* SOLUTION GETTING THE CONFIGURATION ON YOUR NGINX WEB_SERVER
