@@ -21,7 +21,7 @@ sudo apt install gparted -y
 sudo apt install -t ${VERSION_CODENAME}-backports cockpit -y
 
 # After you already have Cockpit on your server, point your web browser to: https://ip-address-of-machine:9090
-sudo apt install ubuntu-desktop -y
+#sudo apt install ubuntu-desktop -y
 
 # step 2. Setup HAPROXY: https://haproxy.debian.net/ >  https://haproxy.debian.net/#distribution=Ubuntu&release=focal&version=2.9 
 sudo apt show haproxy
@@ -36,4 +36,4 @@ sudo systemctl enable haproxy
 # Step 3. configure HAPROXY:
 sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bk
 #sudo nano /etc/haproxy/haproxy.cfg
-sudo reboot
+#sudo reboot
