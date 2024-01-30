@@ -9,8 +9,8 @@ sudo apt list --upgradable
 sudo apt autoremove -y
 sudo apt upgrade -y
 
-sudo apt install xrdp -y
-sudo systemctl enable xrdp
+#sudo apt install xrdp -y
+#sudo systemctl enable xrdp
 sudo apt install ufw -y
 sudo apt install net-tools -y
 sudo apt install gparted -y
