@@ -308,5 +308,3 @@ $ systemctl status haproxy.service
 
 
 # 📚 Author 🖋️
-
-[Mustapha Aliyu Galadima](https://github.com/MG-Musty/)
