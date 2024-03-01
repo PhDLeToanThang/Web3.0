@@ -1,6 +1,6 @@
 # HAProxy 2.9
 * LOAD_BALANCER USING HAPROXY ON NGINX WEB_SERVER
-* Firewall Gateway Layer 4 base và Layer 7 for Application Specialist (OOS, PowerBI, Teramind Audit, Wifi Cloud 5G, IoT Gateway Hub vs Sensors...)
+* Firewall Gateway Layer 4 base và Layer 7 for Application Specialist (Minio Cluster Enterprise Licenses, Office Web Oneline - OOS, PowerBI - PBI report servers, Teramind Audit, Wifi Cloud 5G, IoT Gateway Hub vs Sensors...)
 * SOLUTION GETTING THE CONFIGURATION ON YOUR NGINX WEB_SERVER
 #HAProxy: http://www.haproxy.org/
 #The Reliable, High Performance TCP/HTTP Load Balancer
