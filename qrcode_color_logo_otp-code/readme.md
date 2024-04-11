@@ -1,4 +1,4 @@
-# Concept: python or php language for Qrcode + color + logo center with otp pincode, GPS, Format ATCOntime ?
+# Part 1: python or php language for Qrcode + color + logo center with otp pincode, GPS, Format ATCOntime ?
 
 ## Mục tiêu chính của Qrcode:
 
@@ -162,10 +162,10 @@ _Tài liệu tham khảo:_
 
 1. Các trang web .net, Wordpress, IIS re-write URL thường có vấn đề với permater Link, hoặc đường link rất dài hoặc có mã ascii unicode utf 8 ...
 
-   1. Sau khi công bố, public hoặc copy link cho mọi người hoặc robot index search một thời gian, thì sự cố hoặc xóa mất link hoặc thay máy chủ DB ...
-   2. Những cuốn sách ebook, pdf, tài liệu dạng chia sẻ chỉ đọc, không cho tải xuống, những tài liệu vẫn được hosting chia sẻ online và thay đổi nội dung nhưng không thay URL...
-   3. Các tài liệu hướng dẫn sử dụng, công bố, tiếp thị sản phẩm của các hãng công nghệ, bán buôn/bán lẻ, bán /cho thuê sách điện tử trực tuyến thay đổi tài liệu ...
-   4. Thư viện điện tử của các Trường phổ thông, Cao đẳng, Đại học, Viện nghiên cứu được các tổ chức KHCN quốc tế công như: F.A.O, I.C.C, UNESCO, WCCO, WTO ... 
+   - Sau khi công bố, public hoặc copy link cho mọi người hoặc robot index search một thời gian, thì sự cố hoặc xóa mất link hoặc thay máy chủ DB ...
+   - Những cuốn sách ebook, pdf, tài liệu dạng chia sẻ chỉ đọc, không cho tải xuống, những tài liệu vẫn được hosting chia sẻ online và thay đổi nội dung nhưng không thay URL...
+   - Các tài liệu hướng dẫn sử dụng, công bố, tiếp thị sản phẩm của các hãng công nghệ, bán buôn/bán lẻ, bán /cho thuê sách điện tử trực tuyến thay đổi tài liệu ...
+   - Thư viện điện tử của các Trường phổ thông, Cao đẳng, Đại học, Viện nghiên cứu được các tổ chức KHCN quốc tế công như: F.A.O, I.C.C, UNESCO, WCCO, WTO ... 
 
 _ví dụ:_Tham khảo các Source code về URL Shortener: https://github.com/topics/url-shortener?l=php
 
@@ -184,9 +184,42 @@ Xem nơi liên kết đi: Thật tốt khi biết liên kết đi đến đâu t
 - Ẩn danh IP (hoặc che giấu IP) [tùy chọn]: Ẩn danh địa chỉ của khách truy cập ngay khi khả thi về mặt kỹ thuật ở giai đoạn sớm nhất có thể của mạng thu thập. Địa chỉ IP đầy đủ không bao giờ được ghi vào đĩa trong trường hợp này. Tính năng này được thiết kế để giúp chủ sở hữu trang web tuân thủ chính sách quyền riêng tư của riêng họ, khuyến nghị từ cơ quan bảo vệ dữ liệu địa phương và các quy định pháp lý như GDPR, có thể ngăn việc lưu trữ thông tin địa chỉ IP đầy đủ.
 
 - Sức mạnh tùy chỉnh: Bạn có muốn trang web của mình chỉ dành cho bạn sử dụng để không ai có thể đăng ký không? Không có gì. Nó nằm trong cấu hình. Người dùng phải đăng ký để tạo URL ngắn? Không sao đâu. Nó nằm trong cấu hình. Từ tệp cấu hình, bạn có thể chỉnh sửa mọi thứ trên trang web của mình. 
-- Danh sách có thể sắp xếp các URL rút ngắn.
-- Giao diện hiện đại và đơn giản.
+- Danh sách có thể sắp xếp các URL rút ngắn cùng bảng dữ liệu của từng Users.
+- Giao diện hiện đại và đơn giản hóa quản lý của từng Portal user cá nhân hóa.
 
+
+# Part 2: Cách sử dụng Mã QR tùy chỉnh với API Logo bằng Python, PHP, Ruby, Javascript ứng dụng trong Thương mại điện tử:
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/edd2c6ff-94ef-4ff6-bcca-0b3d19b87957)
+
+- Mã QR (Mã phản hồi nhanh) được sử dụng trong nhiều ứng dụng để cho phép người dùng truy cập thông tin ngay lập tức. Thế giới gần đây đã bắt đầu sử dụng mã QR trong các siêu thị và các cửa hàng bán lẻ khác để hỗ trợ truy tìm dấu vết tiếp xúc với Covid-19. Điều này có nghĩa là nhu cầu về nhiều ứng dụng để tạo điều kiện tạo mã QR thuận tiện ngày càng tăng.
+
+- May mắn thay, một số API cung cấp khả năng đó. Mã QR tùy chỉnh với API Logo là một trong những API như vậy cho phép bạn tạo mã QR tùy chỉnh.
+
+## Mã QR tùy chỉnh với API Logo là gì?
+
+- Mã QR tùy chỉnh với API logo cho phép tạo mã QR độc đáo, chất lượng cao với logo, màu sắc, thiết kế và hình dạng tùy chỉnh. Bạn cũng có thể xuất hình ảnh mã QR đầu ra ở nhiều định dạng khác nhau như PNG, SVG, PDF và EPS. Hơn nữa, API này cho phép tạo mã QR trong suốt tùy chỉnh có thể được sử dụng làm lớp phủ cho bất kỳ nền nào.
+
+- Mã QR tùy chỉnh với API Logo là API trả phí với ba gói giá để bạn lựa chọn. Nó hỗ trợ nhiều ngôn ngữ lập trình, bao gồm Python, PHP, Ruby và Javascript. Trong bài viết này, chúng ta sẽ xem cách sử dụng API này với nhiều ngôn ngữ lập trình.
+
+## Mã QR tùy chỉnh với API Logo hoạt động như thế nào?
+
+- Mã QR tùy chỉnh với API logo sử dụng logic API đơn giản để gửi yêu cầu và nhận được phản hồi cần thiết. Khi gửi yêu cầu, nó bao gồm các tham số xác thực như khóa API và máy chủ lưu trữ để cho phép máy chủ xác định đó là yêu cầu hợp lệ. Phần nội dung của yêu cầu API chứa các tham số bắt buộc, trong đó chỉ định chi tiết tùy chỉnh để tạo mã QR. Khi máy chủ API đã nhận và xử lý yêu cầu, nó sẽ gửi phản hồi thích hợp cho máy khách ở định dạng JSON.
+
+- Nó sẽ hiển thị các thông tin cần thiết nếu yêu cầu thành công. Ví dụ: mã QR được tạo sẽ là phản hồi thành công của yêu cầu được gửi đến điểm cuối tạo mã QR. Nếu yêu cầu không hợp lệ hoặc không thành công, tải trọng phản hồi sẽ chứa mã lỗi và thông tin chi tiết.
+
+## Đối tượng mục tiêu cho Mã QR tùy chỉnh với API Logo
+
+### Nhà tiếp thị/Nhà quảng cáo
+Nhiều thương hiệu đã chuyển sang sử dụng mã QR có thương hiệu từ mã QR đen trắng truyền thống do giao diện hấp dẫn của chúng. API này cung cấp khả năng tương tự mà họ cần. Khi sử dụng API này, nhà tiếp thị và nhà quảng cáo có thể tạo mã QR đầy màu sắc, bao gồm logo công ty và sử dụng chúng trong các tài liệu tiếp thị và quảng cáo như áp phích, biểu ngữ, thẻ và tài liệu quảng cáo để quảng bá doanh nghiệp và tạo nhận thức về thương hiệu.
+
+### Thực thể kinh doanh
+API này cho phép các doanh nghiệp sử dụng logo của họ với mã QR, nghĩa là họ có thể có mã QR trông chuyên nghiệp với nhận dạng duy nhất. Vì vậy, Khách hàng có thể dễ dàng nhận ra thương hiệu của mình và cảm nhận được sự an tâm. Do đó, họ có thể sử dụng các mã QR này trong trang web trực tuyến của mình cho nhiều mục đích khác nhau như hướng khách hàng đến trang web, thanh toán, v.v. Ngoài ra, doanh nghiệp có thể sử dụng API này để thiết kế danh thiếp và sử dụng chúng trong bao bì.
+
+### Nhà bán lẻ: Cửa hàng Dược phẩm, Các mặt hàng cần đóng gói thủ công - nông thổ - thủy hải sản/ đóng gói dây chuyền - mì - đồ hộp - bao bì:
+Trong kỷ nguyên Covid-19 này, mã QR đã trở thành một yếu tố thiết yếu đối với các nhà bán lẻ vì nó cung cấp một cơ chế không cần chạm để cấp quyền truy cập vào các cửa hàng bán lẻ. Các nhà bán lẻ yêu cầu mã QR tùy chỉnh để duy trì chất lượng khi in. Do đó, API này rất hữu ích đối với họ vì nó cho phép tạo ngay mã QR tùy chỉnh với chất lượng cao cho mục đích in ấn.
+
+_Tham khảo: https://rapidapi.com/blog/custom-qr-code-with-logo-api-with-python-php-ruby-javascript-examples/_
 
 #### License The MIT License
 Copyright © 2005 all contributors.
