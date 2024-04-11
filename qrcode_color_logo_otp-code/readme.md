@@ -14,7 +14,8 @@ For Python, you have a couple of options:
 Using pyqrcode with Logo:
 You can use the pyqrcode module to generate a QR code and then overlay a logo on it.
 Here’s an example of how to create a QR code with a centered logo using pyqrcode:
-Python
+
+```Python
 
 import pyqrcode
 from PIL import Image
@@ -42,10 +43,13 @@ qr_image.paste(logo, box)
 
 # Display the final QR code with the logo
 qr_image.show()
-AI-generated code. Review and use carefully. More info on FAQ.
+```
+
+# AI-generated code. Review and use carefully. More info on FAQ.
 Using External Libraries:
 There are other Python libraries like Pillow (PIL) that allow you to manipulate images and overlay logos. You can create a QR code using any QR code library and then use Pillow to add the logo.
-QR Code Generation in PHP
+
+### QR Code Generation in PHP
 For PHP, you can explore existing libraries that support QR code generation:
 
 zxpsuper/qrcode-with-logos:
