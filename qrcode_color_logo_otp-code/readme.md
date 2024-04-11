@@ -1,12 +1,12 @@
-# Concept: github source python or php language qrcode color have logo center and otp pincode ?
+# Concept: python or php language for Qrcode + color + logo center with otp pincode, GPS, Format ATCOntime ?
 
-## Công dụng chính của Qrcode:
+## Mục tiêu chính của Qrcode:
 
 1. Qrcode có Color để làm đẹp, gây ấn tượng, nhưng thực chất là để tạo sự khác biệt, nhận dạng nhanh, độ chính xác đòi hỏi các scan camera nhận biết chi tiết, chống fake.
 
 1. Qrcode có Logo mầu để làm nhận biết rõ cho mắt người, scan/camera phân biệt các mặt hàng, chủng loại, thương hiệu của các Tổ chức Doanh nghiệp làm hàng có xuất sứ.
 
-1. Qrcode cung cấp trong portal theo ngôn ngữ Python AI/ Laraven PHP để dễ tùy biến theo cá nhân: lưu /xóa/sửa lại kết quả/ data để người dùng kiểm soát được Qrcode.
+1. Qrcode cung cấp trong Cổng thông tin "Qrcode generate Portal" theo ngôn ngữ Python AI hoặc Laraven PHP để dễ tùy biến theo cá nhân: lưu /xóa/sửa lại kết quả/ data để người dùng kiểm soát được Qrcode.
 
 1. Qrcode nhận dạng PinCode cho OTP (One-Time Password) pincode giúp người dùng hoặc Quản trị CNTT thuận tiện thêm Tài khoản có dùng tOTP/HOTP vào các Authenticator Apps Mobile.
 
@@ -72,43 +72,62 @@ Another option is the chillerlan/php-qrcode library, which is a PHP QR code gene
 Remember to adjust the code snippets according to your specific requirements, such as incorporating the OTP pincode.
 
 
-# QRcode generate from URL and logo, colors in campaign | dynamic QRcode scan | QRcode hitmap | dashboard | multi-langauge
+# Cổng thông tin "Qrcode generate Portal" Users from URL and logo, colors in campaign | dynamic QRcode scan | QRcode hitmap | dashboard | multi-langauge
 
 ✨Laravel QRCode Scan✨
 Dynamic QR code, logo QR code generate, tracking QR code scan, hitmap dashboard and admin panel using Laravel 7 framework, Vuexy template, endroid/qr-code library
+- sample code: https://github.com/hc0503/laravel-qrcode-campaign?tab=readme-ov-file 
 
-Screenshots
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/d8662cb0-ac07-4bcb-9175-179edd17cf11)
 
-ScreenShot 
 
-ScreenShot 
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/9912829e-ea73-4562-b622-7aca43ac5fd5)
 
-ScreenShot 
 
-ScreenShot 
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/7cc905af-846f-4b35-ae4d-6db7949af4ff)
 
-ScreenShot 
 
-ScreenShot 
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/eb7913f8-9606-482c-a1ce-8259c87bd5a1)
 
-ScreenShot 
 
-ScreenShot 
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/3551e7f8-9c35-4639-afb0-9d57f666fab7)
+ 
 
-ScreenShot
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/62e02c0e-056f-495d-b5a9-7803cef11f88)
+
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/03e54ed3-8cb7-4b15-8f5c-d310d337440b)
+ 
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/20d38bf8-a904-4134-bfb6-69a0e1bc9ef9)
+
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/d2e6b06b-4f4e-4d4c-9f73-7b0195a859ce)
+
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/916d4c88-fafb-4bc1-b580-c5c9a5bebeac)
+
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/541cf74c-6b18-4b3e-8050-80810f8375a4)
+
 
 Installation
 
 ```Composer install
 $ composer install
+
 Laravel key generate
 $ php artisan key:generate
+
 Node module install
 $ npm i
+
 Mix build
 $ npm run dev
+
 Database migrate and seed
 $ php artisan migrate --seed
+
 Run server
 $ php artisan serve
 ```
