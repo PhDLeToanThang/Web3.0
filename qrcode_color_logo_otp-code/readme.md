@@ -1,6 +1,6 @@
 # Concept: github source python or php language qrcode color have logo center and otp pincode ?
 
-##Công dụng chính của Qrcode:
+## Công dụng chính của Qrcode:
 
 1. Qrcode có Color để làm đẹp, gây ấn tượng, nhưng thực chất là để tạo sự khác biệt, nhận dạng nhanh, độ chính xác đòi hỏi các scan camera nhận biết chi tiết, chống fake.
 
@@ -13,14 +13,14 @@
 1. Qrcode có dùng thuật toán GPS và Format ATCOntime để tạo mã Blueprint Scan fastest Object khi dán nó trên các phương tiện di chuyển nhằm định vị không dừng , giúp người tìm vị trí cứu hộ, tìm cơ sở cứu thương, hầm trú ẩn tránh động đất, sóng thần. 
 
 
-##QR Code Generation:
+## QR Code Generation:
 You want to create a QR code using either Python or PHP.
 The QR code should be colorful and have a logo in the center.
 Additional Requirements:
 The QR code should incorporate an OTP (One-Time Password) pincode.
 Let’s tackle this step by step:
 
-##QR Code Generation in Python
+## QR Code Generation in Python
 For Python, you have a couple of options:
 
 Using pyqrcode with Logo:
@@ -57,7 +57,7 @@ qr_image.paste(logo, box)
 qr_image.show()
 ```
 
-##AI-generated code. Review and use carefully. More info on FAQ.
+## AI-generated code. Review and use carefully. More info on FAQ.
 
 Using External Libraries:
 There are other Python libraries like Pillow (PIL) that allow you to manipulate images and overlay logos. You can create a QR code using any QR code library and then use Pillow to add the logo.
