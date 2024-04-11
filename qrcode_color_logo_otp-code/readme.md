@@ -190,4 +190,4 @@ Xem nơi liên kết đi: Thật tốt khi biết liên kết đi đến đâu t
 
 #### License The MIT License
 Copyright © 2005 all contributors.
-Phd. Le Toan ThangThang
+Editor: Phd. Le Toan Thang
