@@ -51,4 +51,15 @@ về logic, hoặc chưa đúng tham số sẽ có thể gây lỗi không start
 -  Sau khi xem kỹ các log thông báo không có lỗi gì về cấu hình haproxy.cfg thì chúng ta mới dùng lệnh: sudo service haproxy restart để khởi động.
 -  Cuối cùng dùng lệnh: systemctl status haproxy.service để kiểm tra tình trạng haproxy service có khởi động lệnh hoặc bị lỗi gì không .
 
+-----
+Lưu ý: Haproxy được triển khai trên linux, vẫn cần bảo mật:
+- PPK,
+- chặn dải Ipv4/v6 và
+- đặt cấu hình SSHD config điều kiện chỉ cho phép user root hoặc admin os mới được kết nối SSH.
+
+Màn hình ví dụ: hackers mò mẫm ;(
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/9ac15318-4c19-43f9-b422-7dae1a9003b2)
+
+
 # 📚 Author 🖋️ Lê Toàn Thắng
