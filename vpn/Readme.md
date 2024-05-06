@@ -23,7 +23,7 @@ Pritunl is built on MongoDB, a reliable and scalable database that can be quickl
 ![image](https://user-images.githubusercontent.com/106635733/208446860-c3a5bcf6-600d-4e5b-81c0-76fdec869ac2.png)
 Installing Pritunl VPN server on Ubuntu 20.04 To install Pritunl VPN server on Ubuntu 20.04, we are going to follow a number of steps as stated below:
 
-wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/vpnenterprise.sh && bash ./vpnenterprise.sh
+wget https://raw.githubusercontent.com/PhDLeToanThang/Web3.0/main/vpn/vpnenterprise.sh && bash vpnenterprise.sh
 
 
 #  Phần 2. Veeam Powered Network (VeeamPN) for Veeam Backup
