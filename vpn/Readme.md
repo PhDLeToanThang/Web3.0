@@ -1,6 +1,32 @@
-# veeambackup:
+#  Phần 1. Cloud VPN Gateway for Enterprise:
+**Xây dựng lại VPN Enterprise for BaaS, Console, Control DC**
+   Install and Configure Pritunl VPN server on Ubuntu 20.04
+In our guide today, we are looking at how to install Pritunl VPN server on Ubuntu 20.04/22.04 LTS. Pritunl VPN is an opensource VPN server and management system. It utilizes a graphical interface that is friendly and easy to use to the user. It is secure and provides a good alternative to the commercial VPN products. It has the ability to create a wide range of cloud vpn networks which can support over a thousands of users.
 
-#  Phần 1. Veeam Powered Network (VeeamPN)
+**Features of Pritunl VPN:**
+Below are the most notable features of Pritunl VPN that makes it an option for many:
+
+1. Simple to install and configure
+2. Supports multi-cloud VPN peering
+3. Offers upto five layers of authentication making it more secure.
+4. Supports Wireguard, giving clients theoption to connect with openvpn or Wireguard
+5. Quickly and easily scale to thousands of users, having high availability in the cloud environment without the need for expensive proprietary hardware
+    supports all OpenVPN clients with official clients for most devices and platforms.
+6. Create multi-cloud site-to-site links with VPC peering. VPC peering available for AWS, Google Cloud, Azure and Oracle Cloud.
+7. Interconnect AWS VPC networks across AWS regions and provide reliable remote access with automatic failover that can scale horizontally
+8. Pritunl is built on MongoDB, a reliable and scalable database that can be quickly deployed
+
+**Pritunl VPN Architecture Review:**
+Pritunl VPN presents an distributed and scalable infrastructure that quickly and easily scale to thousands of users, having high availability in the cloud environment without the need for expensive proprietary hardware. It works on server-client architecture, where servers and users are configured on the VPN server and clients profiles are downloaded to be used on the clients.
+Pritunl is built on MongoDB, a reliable and scalable database that can be quickly deployed. With built in support for replication a reliable database can be setup in minutes making a Pritunl cluster deployment fast and easy.
+
+![image](https://user-images.githubusercontent.com/106635733/208446860-c3a5bcf6-600d-4e5b-81c0-76fdec869ac2.png)
+Installing Pritunl VPN server on Ubuntu 20.04 To install Pritunl VPN server on Ubuntu 20.04, we are going to follow a number of steps as stated below:
+
+wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/vpnenterprise.sh && bash ./vpnenterprise.sh
+
+
+#  Phần 2. Veeam Powered Network (VeeamPN) for Veeam Backup
 If you follow Veeam, you have certainly not missed quite a few blog posts about Veeam PN (Powered Network) software. Already during VeeamON 2017, we could see a functional demo, but the solution was not GA at that time. Now Veeam has finally released the final version of Veeam PN and it's available from Azure Marketplace (Hub Appliance) and as an OVA package for local deployment (Site Gateway).
 The product can be used to easily setup VPN connections over a public network.
 
@@ -46,30 +72,3 @@ https://thangletoan.wordpress.com/2021/08/16/cai-va-cau-hinh-openvpn-va-wire-gua
 
 **Link Download VeeamPN OVA (Virtual Machine):**
 https://1drv.ms/u/s!AtT2yQnThe-ykLYa3oyYiYyPk5Pp6A?e=HtPWlU
-
-#  Phần 2. Cloud VPN Gateway:
-**Xây dựng lại VPN Enterprise for BaaS, Console, Control DC**
-   Install and Configure Pritunl VPN server on Ubuntu 20.04
-In our guide today, we are looking at how to install Pritunl VPN server on Ubuntu 20.04. Pritunl VPN is an opensource VPN server and management system. It utilizes a graphical interface that is friendly and easy to use to the user. It is secure and provides a good alternative to the commercial VPN products. It has the ability to create a wide range of cloud vpn networks which can support over a thousands of users.
-
-**Features of Pritunl VPN:**
-Below are the most notable features of Pritunl VPN that makes it an option for many:
-
-1. Simple to install and configure
-2. Supports multi-cloud VPN peering
-3. Offers upto five layers of authentication making it more secure.
-4. Supports Wireguard, giving clients theoption to connect with openvpn or Wireguard
-5. Quickly and easily scale to thousands of users, having high availability in the cloud environment without the need for expensive proprietary hardware
-    supports all OpenVPN clients with official clients for most devices and platforms.
-6. Create multi-cloud site-to-site links with VPC peering. VPC peering available for AWS, Google Cloud, Azure and Oracle Cloud.
-7. Interconnect AWS VPC networks across AWS regions and provide reliable remote access with automatic failover that can scale horizontally
-8. Pritunl is built on MongoDB, a reliable and scalable database that can be quickly deployed
-
-**Pritunl VPN Architecture Review:**
-Pritunl VPN presents an distributed and scalable infrastructure that quickly and easily scale to thousands of users, having high availability in the cloud environment without the need for expensive proprietary hardware. It works on server-client architecture, where servers and users are configured on the VPN server and clients profiles are downloaded to be used on the clients.
-Pritunl is built on MongoDB, a reliable and scalable database that can be quickly deployed. With built in support for replication a reliable database can be setup in minutes making a Pritunl cluster deployment fast and easy.
-
-![image](https://user-images.githubusercontent.com/106635733/208446860-c3a5bcf6-600d-4e5b-81c0-76fdec869ac2.png)
-Installing Pritunl VPN server on Ubuntu 20.04 To install Pritunl VPN server on Ubuntu 20.04, we are going to follow a number of steps as stated below:
-wget https://raw.githubusercontent.com/PhDLeToanThang/veeambackup/master/vpnenterprise.sh && bash ./vpnenterprise.sh
-
