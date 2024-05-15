@@ -1,4 +1,9 @@
 # HAProxy 2.9
+
+## Kiến trúc:
+
+![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/9d906356-abeb-4fcb-9b2d-ff5a20daf2b6)
+
 * LOAD_BALANCER USING HAPROXY ON NGINX WEB_SERVER
 * Firewall Gateway Layer 4 base và Layer 7 for Application Specialist (Minio Cluster Enterprise Licenses, Office Web Oneline - OOS, PowerBI - PBI report servers, Teramind Audit, Wifi Cloud 5G, IoT Gateway Hub vs Sensors...)
 * SOLUTION GETTING THE CONFIGURATION ON YOUR NGINX WEB_SERVER
