@@ -9,6 +9,13 @@
 * SOLUTION GETTING THE CONFIGURATION ON YOUR NGINX WEB_SERVER
 #HAProxy: http://www.haproxy.org/
 #The Reliable, High Performance TCP/HTTP Load Balancer
+
+## Lưu ý: 
+
+- HAproxy 2.x không hỗ trợ giao thức UDP protocol mode.
+- Tất cả các dạng UDP giao thức phải chuyển qua cơ chế cấu hình Stream và quản lý Port range bởi 
+các máy chủ Web như Apache Proxy Reversed, Nginx proxy cài trên cùng hệ thống Hapxory.
+
 ----
 * Bước 1. Cập nhật linux:
 <!-- sudo apt update -y
