@@ -13,9 +13,13 @@
 ## Lưu ý: 
 
 - HAproxy 2.x không hỗ trợ giao thức UDP protocol mode.
-- Tất cả các dạng UDP giao thức phải chuyển qua cơ chế cấu hình Stream và quản lý Port range bởi 
-các máy chủ Web như Apache Proxy Reversed, Nginx proxy cài trên cùng hệ thống Hapxory.
-
+- Tất cả các dạng UDP giao thức phải chuyển qua cơ chế cấu hình Firewall OS cho phép Port range forward dải IPv4 trên cùng hệ thống Hapxory.
+_ví dụ: trên Ubuntu terminal nhập lệnh:_
+  ```terminal
+   sudo apt install ufw
+   ufw enable
+   ufw allow from any to 192.18.0.13/24 port 16384:32768 proto udp
+  ```
 ----
 * Bước 1. Cập nhật linux:
 <!-- sudo apt update -y
