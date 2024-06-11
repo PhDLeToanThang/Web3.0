@@ -11,12 +11,12 @@ sudo apt list --upgradable
 sudo apt autoremove -y
 sudo apt upgrade -y
 
-sudo sudo apt install python3 python3-pip python3-dev python3-pip -y
+sudo sudo apt install python3 python3-dev -y
 # ham xac dinh phien ban phython co san o Ubuntu 20.04, version <= 3.8
 # ham xac dinh phien ban python OS Windows: python --version
 python3 --version
 sudo apt install python3-pip -y
-
+sudo apt install git -y
 
 #---------------------
 #B1. Cách 2: if not download auto, you can Use Deadsnakes PPA to Install Python 3.12 on Ubuntu
@@ -77,7 +77,7 @@ sudo jupyter --version
 #--------------------
 #Phần 3. cài git và nâng cấp jupyterlab-git
 
-sudo pip3 install --upgrade jupyterlab-git
+sudo pip3 install jupyterlab-git
 
 #https://docs.python.org/3/tutorial/venv.html
 sudo python3 -m virtualenv etl-elt-env
