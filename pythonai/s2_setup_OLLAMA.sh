@@ -28,4 +28,4 @@ sudo apt update && sudo apt install snapd
 #Install Ollama WebUI: 
 sudo snap install ollama-webui --beta
 
-#Access the WebUI at http://localhost:11434 in your browser.
+#Access the WebUI at http://localhost:8080/auth/ in your browser.
