@@ -27,7 +27,18 @@ sudo apt update && sudo apt install snapd
 
 #Install Ollama WebUI: 
 sudo snap install ollama-webui --beta
-
 #Access the WebUI at http://localhost:8080/auth/ in your browser.
+
+#Phần 3-Install model ollama3
 snap install ollama
 ollama pull llama3
+#ref: https://github.com/ollama/ollama/blob/main/README.md#import-from-gguf
+#list models on ollama: https://ollama.com/library
+ollama pull medllama2
+ollama pull sqlcoder
+#https://ollama.com/library/sqlcoder
+#https://ollama.com/library/medllama2
+#curl -X POST http://localhost:11434/api/generate -d '{
+#  "model": "medllama2",
+#  "prompt":"A 35-year-old woman presents with a persistent dry cough, shortness of breath, and fatigue. She is initially suspected of having asthma, but her spirometry results do not improve with bronchodilators. What could be the diagnosis?"
+# }'
