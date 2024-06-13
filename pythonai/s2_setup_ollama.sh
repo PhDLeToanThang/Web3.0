@@ -36,6 +36,7 @@ ollama pull llama3
 #list models on ollama: https://ollama.com/library
 ollama pull medllama2
 ollama pull sqlcoder
+ollama pull gemma:7b
 #https://ollama.com/library/sqlcoder
 #https://ollama.com/library/medllama2
 #curl -X POST http://localhost:11434/api/generate -d '{
