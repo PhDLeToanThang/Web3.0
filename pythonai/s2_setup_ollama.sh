@@ -29,3 +29,5 @@ sudo apt update && sudo apt install snapd
 sudo snap install ollama-webui --beta
 
 #Access the WebUI at http://localhost:8080/auth/ in your browser.
+snap install ollama
+ollama pull llama3
