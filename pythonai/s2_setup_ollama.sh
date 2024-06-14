@@ -24,6 +24,8 @@ ollama --version #in the terminal.
 #If you prefer a web-based interface, you can install Ollama WebUI:
 #Install Snapd (if not already installed): 
 sudo apt update && sudo apt install snapd
+sudo apt install ibus-unikey
+ibus restart
 
 #Install Ollama WebUI: 
 sudo snap install ollama-webui --beta
