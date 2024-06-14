@@ -10,7 +10,8 @@ sudo apt update -y
 sudo apt list --upgradable
 sudo apt autoremove -y
 sudo apt upgrade -y
-
+sudo apt install wget -y
+sudo apt install ssh -y
 sudo sudo apt install python3-full -y
 # ham xac dinh phien ban phython co san o Ubuntu 20.04, version <= 3.8
 # ham xac dinh phien ban python OS Windows: python --version
@@ -18,7 +19,7 @@ python3 --version
 sudo apt install python3-pip -y
 sudo apt install git -y
 sudo apt install nano -y
-
+sudo apt install snapd -y
 #---------------------
 #B1. Cách 2: if not download auto, you can Use Deadsnakes PPA to Install Python 3.12.3 on Ubuntu
 #sudo apt install software-properties-common -y
@@ -96,7 +97,7 @@ sudo python3 -m pip config set global.break-system-packages true
 #https://docs.python.org/3/tutorial/venv.html
 sudo python3 -m venv etl-elt-env
 source etl-elt-env/bin/activate
-apt install jupyter
+apt install jupyter -y
 jupyter server extension list
 
 pip3 install notebook
