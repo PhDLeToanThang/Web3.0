@@ -1,3 +1,25 @@
+######################################################################################
+#    What's new Wordpress 6.7.2 
+#		here is a short list of main changes done in this version: https://wordpress.org/latest.zip 
+# This iteration of Wordpress 6.7.2 contains 
+# Note that Wordpress 6.7.2 runs on Ubuntu  (24.04 LTS).
+######################################################################################
+#!/bin/bash -e
+clear
+cd ~
+
+############### Tham số cần thay đổi ở đây ###################
+echo "FQDN: e.g: demo.company.vn"   # Đổi địa chỉ web thứ nhất Website Master for Resource code - để tạo cùng 1 Source code duy nhất 
+read -e FQDN
+
+echo "Email Address of Admin CA SSL/TLS"   # Địa chỉ email của nhà quản trị SSL/TLS cho HTTPS
+read -e emailssl
+
+echo "run install? (y/n)"
+read -e run
+if [ "$run" == n ] ; then
+  exit
+else
 sudo apt update && sudo apt upgrade -y
 #Step 1: Download WordPress
 wget https://wordpress.org/latest.zip 
@@ -157,3 +179,4 @@ sudo certbot --nginx --agree-tos --redirect --hsts --staple-ocsp --email you@exa
 
 #ref: https://www.linuxbabe.com/ubuntu/install-wordpress-ubuntu-20-04-nginx-mariadb-php7-4-lemp
 #ref 2: https://www.linuxbabe.com/nginx/what-are-spdy-and-http2-and-how-to-enable-them-on-nginx
+fi
