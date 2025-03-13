@@ -144,95 +144,95 @@ systemctl restart mariadb
 #Step 6: Configure WordPress
 cd /usr/share/nginx/$FQDN
 
-sudo nano wp-config.php
+# sudo nano wp-config.php
 cat > /usr/share/nginx/$FQDN/wp-config.php <<END
 END
 
-echo "<?php"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'DB_NAME', '"$dbname"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'DB_USER', '"$dbuser"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'DB_PASSWORD', '"$dbpass"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'DB_HOST', 'localhost' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'DB_CHARSET', 'utf8' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'DB_COLLATE', '' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'AUTH_KEY',         'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'LOGGED_IN_KEY',    'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'NONCE_KEY',        'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'AUTH_SALT',        'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'LOGGED_IN_SALT',   'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'NONCE_SALT',       'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "$table_prefix = 'wp_';"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'WP_DEBUG', false );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "if ( ! defined( 'ABSPATH' ) ) {"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "define( 'ABSPATH', __DIR__ . '/' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "}"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo "require_once ABSPATH . 'wp-settings.php';"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo '<?php'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'DB_NAME', '"$dbname"' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'DB_USER', '"$dbuser"' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'DB_PASSWORD', '"$dbpass"' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'DB_HOST', 'localhost' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'DB_CHARSET', 'utf8' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'DB_COLLATE', '' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'AUTH_KEY',         'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'LOGGED_IN_KEY',    'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'NONCE_KEY',        'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'AUTH_SALT',        'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'LOGGED_IN_SALT',   'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'NONCE_SALT',       'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo '$table_prefix = 'wp_';'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'WP_DEBUG', false );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'if ( ! defined( 'ABSPATH' ) ) {'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'define( 'ABSPATH', __DIR__ . '/' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo '}'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo 'require_once ABSPATH . 'wp-settings.php';'  >> /usr/share/nginx/$FQDN/wp-config.php
 
 
 sudo chown www-data:www-data /usr/share/nginx/$FQDN/ -R
 
 #Step 7: Create an Nginx Server Block for WordPress
 
-sudo nano /etc/nginx/conf.d/$FQDN.conf
+#sudo nano /etc/nginx/conf.d/$FQDN.conf
 cat > /etc/nginx/conf.d/$FQDN.conf <<END
 END
 
-echo "server {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  listen 80;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  listen [::]:80;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  server_name '$FQDN';" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  root /usr/share/nginx/"{$FQDN}"/;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  index index.php index.html index.htm;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  location / {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    try_files $uri $uri/ /index.php;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  }" >> /etc/nginx/conf.d/$FQDN.conf
-echo "   location ~ ^/wp-json/ {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "     rewrite ^/wp-json/(.*?)$ /?rest_route=/$1 last;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "   }" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  location ~* /wp-sitemap.*\.xml {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    try_files $uri $uri/ /index.php$is_args$args;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  }" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  error_page 404 /404.html;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  error_page 500 502 503 504 /50x.html;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  client_max_body_size 20M;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  location = /50x.html {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    root /usr/share/nginx/html;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  }" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  location ~ \.php$ {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    fastcgi_pass unix:/run/php/php8.3-fpm.sock;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    include fastcgi_params;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    include snippets/fastcgi-php.conf;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    fastcgi_buffers 1024 4k;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    fastcgi_buffer_size 128k;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    # Add headers to serve security related headers" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    add_header X-Content-Type-Options nosniff;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    add_header X-XSS-Protection '1; mode=block';" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    add_header X-Permitted-Cross-Domain-Policies none;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "    add_header X-Frame-Options 'SAMEORIGIN';" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  }" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  #enable gzip compression" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  gzip on;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  gzip_vary on;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  gzip_min_length 1000;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  gzip_comp_level 5;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  gzip_types application/json text/css application/x-javascript application/javascript image/svg+xml;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  gzip_proxied any;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  # A long browser cache lifetime can speed up repeat visits to your page" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  location ~* \.(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf|css|js|ico|xml)$ {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "       access_log        off;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "       log_not_found     off;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "       expires           360d;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  }" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  # disable access to hidden files" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  location ~ /\.ht {" >> /etc/nginx/conf.d/$FQDN.conf
-echo "      access_log off;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "      log_not_found off;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "      deny all;" >> /etc/nginx/conf.d/$FQDN.conf
-echo "  }" >> /etc/nginx/conf.d/$FQDN.conf
-echo "}" >> /etc/nginx/conf.d/$FQDN.conf
+echo 'server {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  listen 80;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  listen [::]:80;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  server_name $FQDN;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  root /usr/share/nginx/$FQDN/;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  index index.php index.html index.htm;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  location / {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    try_files $uri $uri/ /index.php;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  }' >> /etc/nginx/conf.d/$FQDN.conf
+echo '   location ~ ^/wp-json/ {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '     rewrite ^/wp-json/(.*?)$ /?rest_route=/$1 last;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '   }' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  location ~* /wp-sitemap.*\.xml {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    try_files $uri $uri/ /index.php$is_args$args;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  }' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  error_page 404 /404.html;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  error_page 500 502 503 504 /50x.html;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  client_max_body_size 20M;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  location = /50x.html {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    root /usr/share/nginx/html;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  }' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  location ~ \.php\$ {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    fastcgi_pass unix:/run/php/php8.3-fpm.sock;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    include fastcgi_params;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    include snippets/fastcgi-php.conf;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    fastcgi_buffers 1024 4k;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    fastcgi_buffer_size 128k;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    # Add headers to serve security related headers' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    add_header X-Content-Type-Options nosniff;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    add_header X-XSS-Protection "1; mode=block";' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    add_header X-Permitted-Cross-Domain-Policies none;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '    add_header X-Frame-Options "SAMEORIGIN";' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  }' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  #enable gzip compression' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  gzip on;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  gzip_vary on;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  gzip_min_length 1000;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  gzip_comp_level 5;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  gzip_types application/json text/css application/x-javascript application/javascript image/svg+xml;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  gzip_proxied any;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  # A long browser cache lifetime can speed up repeat visits to your page' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  location ~* \.(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf|css|js|ico|xml)$ {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '       access_log        off;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '       log_not_found     off;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '       expires           360d;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  }' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  # disable access to hidden files' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  location ~ /\.ht {' >> /etc/nginx/conf.d/$FQDN.conf
+echo '      access_log off;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '      log_not_found off;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '      deny all;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  }' >> /etc/nginx/conf.d/$FQDN.conf
+echo '}' >> /etc/nginx/conf.d/$FQDN.conf
 
 sudo nginx -t
 sudo systemctl reload nginx
