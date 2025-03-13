@@ -80,10 +80,10 @@ EOF
 # After you enter response for these questions, your MariaDB installation will be secured.
 
 #Step 2. Install PHP-FPM & Related modules
-sudo apt install software-properties-common apt-transport-https -y
+sudo apt install software-properties-common -y
 sudo -S add-apt-repository ppa:ondrej/php -y
 sudo apt update -y
-sudo apt install -y php8.3-fpm php8.3-common php8.3-mbstring php8.3-xmlrpc php8.3-soap php8.3-gd php8.3-xml php8.3-intl php8.3-mysql php8.3-cli php8.3-mcrypt php8.3-ldap php8.3-zip php8.3-curl php-imagick php8.3-bcmath php8.3-json
+sudo apt install -y php8.3-fpm php8.3-common php8.3-mbstring php8.3-xmlrpc php8.3-soap php8.3-gd php8.3-xml php8.3-intl php8.3-mysql php8.3-cli php8.3-mcrypt php8.3-ldap php8.3-zip php8.3-curl php-imagick php8.3-bcmath
 
 #Open PHP-FPM config file.
 #sudo nano /etc/php/8.3/fpm/php.ini
@@ -182,8 +182,8 @@ END
 echo 'server {' >> /etc/nginx/conf.d/$FQDN.conf
 echo '  listen 80;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '  listen [::]:80;' >> /etc/nginx/conf.d/$FQDN.conf
-echo '  server_name $FQDN;' >> /etc/nginx/conf.d/$FQDN.conf
-echo '  root /usr/share/nginx/$FQDN/;' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  server_name '$FQDN';' >> /etc/nginx/conf.d/$FQDN.conf
+echo '  root /usr/share/nginx/'$FQDN'/;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '  index index.php index.html index.htm;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '  location / {' >> /etc/nginx/conf.d/$FQDN.conf
 echo '    try_files $uri $uri/ /index.php;' >> /etc/nginx/conf.d/$FQDN.conf
