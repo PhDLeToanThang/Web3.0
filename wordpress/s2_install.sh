@@ -149,22 +149,22 @@ cat > /usr/share/nginx/$FQDN/wp-config.php <<END
 END
 
 echo '<?php'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'DB_NAME', '"$dbname"' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'DB_USER', '"$dbuser"' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'DB_PASSWORD', '"$dbpass"' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'DB_HOST', 'localhost' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'DB_CHARSET', 'utf8' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'DB_COLLATE', '' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'AUTH_KEY',         'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'LOGGED_IN_KEY',    'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'NONCE_KEY',        'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'AUTH_SALT',        'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'LOGGED_IN_SALT',   'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'NONCE_SALT',       'put your unique phrase here' );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'DB_NAME', '"$dbname"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'DB_USER', '"$dbuser"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'DB_PASSWORD', '"$dbpass"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'DB_HOST', 'localhost' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'DB_CHARSET', 'utf8' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'DB_COLLATE', '' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'AUTH_KEY',         'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'LOGGED_IN_KEY',    'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'NONCE_KEY',        'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'AUTH_SALT',        'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'LOGGED_IN_SALT',   'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'NONCE_SALT',       'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo '$table_prefix = 'wp_';'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'WP_DEBUG', false );'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'WP_DEBUG', false );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo 'if ( ! defined( 'ABSPATH' ) ) {'  >> /usr/share/nginx/$FQDN/wp-config.php
 echo 'define( 'ABSPATH', __DIR__ . '/' );'  >> /usr/share/nginx/$FQDN/wp-config.php
 echo '}'  >> /usr/share/nginx/$FQDN/wp-config.php
@@ -196,7 +196,7 @@ echo '      fastcgi_pass  unix:/run/php/php8.3-fpm.sock;' >> /etc/nginx/conf.d/$
 echo '      fastcgi_index index.php;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '      include fastcgi_params;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> /etc/nginx/conf.d/$FQDN.conf
-echo '    	include snippets/fastcgi-php.conf;' >> /etc/nginx/conf.d/$FQDN.conf
+#echo '    	include snippets/fastcgi-php.conf;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '    	fastcgi_buffers 1024 4k;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '    	fastcgi_buffer_size 128k;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '      include /etc/nginx/fastcgi.conf;' >> /etc/nginx/conf.d/$FQDN.conf
