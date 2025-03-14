@@ -163,7 +163,7 @@ echo "define( 'AUTH_SALT',        'put your unique phrase here' );"  >> /usr/sha
 echo "define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'LOGGED_IN_SALT',   'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'NONCE_SALT',       'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo '$table_prefix = '"wp_"';'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo '$table_prefix = ''wp_'';'  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'WP_DEBUG', false );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "if ( ! defined( 'ABSPATH' ) ) {"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'ABSPATH', __DIR__ . '/' );"  >> /usr/share/nginx/$FQDN/wp-config.php
