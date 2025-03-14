@@ -148,7 +148,7 @@ cd /usr/share/nginx/$FQDN
 cat > /usr/share/nginx/$FQDN/wp-config.php <<END
 END
 
-echo '<?php'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "<?php"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'DB_NAME', '"$dbname"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'DB_USER', '"$dbuser"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'DB_PASSWORD', '"$dbpass"' );"  >> /usr/share/nginx/$FQDN/wp-config.php
@@ -163,13 +163,12 @@ echo "define( 'AUTH_SALT',        'put your unique phrase here' );"  >> /usr/sha
 echo "define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'LOGGED_IN_SALT',   'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'NONCE_SALT',       'put your unique phrase here' );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo '$table_prefix = 'wp_';'  >> /usr/share/nginx/$FQDN/wp-config.php
+echo '$table_prefix = '"wp_"';'  >> /usr/share/nginx/$FQDN/wp-config.php
 echo "define( 'WP_DEBUG', false );"  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'if ( ! defined( 'ABSPATH' ) ) {'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'define( 'ABSPATH', __DIR__ . '/' );'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo '}'  >> /usr/share/nginx/$FQDN/wp-config.php
-echo 'require_once ABSPATH . 'wp-settings.php';'  >> /usr/share/nginx/$FQDN/wp-config.php
-
+echo "if ( ! defined( 'ABSPATH' ) ) {"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "define( 'ABSPATH', __DIR__ . '/' );"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "}"  >> /usr/share/nginx/$FQDN/wp-config.php
+echo "require_once ABSPATH . 'wp-settings.php';"  >> /usr/share/nginx/$FQDN/wp-config.php
 
 sudo chown www-data:www-data /usr/share/nginx/$FQDN/ -R
 
@@ -203,29 +202,29 @@ echo '      include /etc/nginx/fastcgi.conf;' >> /etc/nginx/conf.d/$FQDN.conf
 echo '    }' >> /etc/nginx/conf.d/$FQDN.conf
 echo '}' >> /etc/nginx/conf.d/$FQDN.conf
 
-server {
-listen 80;
-   server_name hanoidata.com.vn;
-   root /usr/share/nginx/hanoidata.com.vn/;
-   index index.php;
-   server_tokens off;
-   access_log /var/log/nginx/wordpress_access.log;
-   error_log /var/log/nginx/wordpress_error.log;
-   client_max_body_size 64M;
-location / {
-   try_files $uri $uri/ /index.php?$args;
-}
-   location ~ \.php$ {
-      fastcgi_pass  unix:/run/php/php8.3-fpm.sock;
-      fastcgi_index index.php;
-      include fastcgi_params;
-      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    	include snippets/fastcgi-php.conf;
-    	fastcgi_buffers 1024 4k;
-    	fastcgi_buffer_size 128k;
-      include /etc/nginx/fastcgi.conf;
-    }
-}
+#server {
+#listen 80;
+#   server_name hanoidata.com.vn;
+#   root /usr/share/nginx/hanoidata.com.vn/;
+#   index index.php;
+#   server_tokens off;
+#   access_log /var/log/nginx/wordpress_access.log;
+#   error_log /var/log/nginx/wordpress_error.log;
+#   client_max_body_size 64M;
+#location / {
+#   try_files $uri $uri/ /index.php?$args;
+#}
+#   location ~ \.php$ {
+#      fastcgi_pass  unix:/run/php/php8.3-fpm.sock;
+#      fastcgi_index index.php;
+#      include fastcgi_params;
+#      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+#    	include snippets/fastcgi-php.conf;
+#    	fastcgi_buffers 1024 4k;
+#    	fastcgi_buffer_size 128k;
+#      include /etc/nginx/fastcgi.conf;
+#    }
+#}
 
 #echo 'server {' >> /etc/nginx/conf.d/$FQDN.conf
 #echo '  listen 80;' >> /etc/nginx/conf.d/$FQDN.conf
