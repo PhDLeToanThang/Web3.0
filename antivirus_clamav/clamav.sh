@@ -5,7 +5,10 @@ sudo apt-get install clamav clamav-daemon -y
 clamscan --version
 Sudo systemctl stop clamav-freshclam
 sudo freshclam
-ls /var/lib/clamav/daily.cvd
+ls /var/lib/clamav/
+
+# look file: daily.cvd
+
 sudo systemctl start clamav-freshclam
 man clamscan
 sudo clamscan --infected --recursive --remove /
