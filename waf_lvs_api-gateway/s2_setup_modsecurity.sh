@@ -12,26 +12,67 @@ sudo apt update -y
 sudo apt list --upgradable 
 sudo apt autoremove -y 
 sudo apt update -y
-sudo apt install nginx -y
 
 # install other required packages with the following command:
-sudo apt install g++ flex bison curl apache2-dev doxygen libyajl-dev ssdeep liblua5.2-dev libgeoip-dev libtool dh-autoreconf libcurl4-gnutls-dev libxml2 libpcre++-dev libxml2-dev git liblmdb-dev libpkgconf3 lmdb-doc pkgconf zlib1g-dev libssl-dev -y
+sudo apt install g++ flex bison curl apache2-dev doxygen \
+libyajl-dev ssdeep liblua5.2-dev libgeoip-dev libtool \
+dh-autoreconf libcurl4-gnutls-dev libxml2 libpcre++-dev \
+libxml2-dev git liblmdb-dev libpkgconf3 lmdb-doc pkgconf \
+zlib1g-dev libssl-dev -y
 
 #2. Cài đặt ModSecurity: wget https://nginx.org/download/
-wget https://nginx.org/download/nginx-1.27.4.tar.gz
+VER1=1.27.4
+wget https://nginx.org/download/nginx-${VER1}.tar.gz
+
+#Extract the archive.
+tar xzf nginx-${VER1}.tar.gz
+
+#Remove any installed versions of Nginx;
+sudo apt remove --purge --auto-remove nginx -y
+
+# Create a non-privileged Nginx system user and group.
+useradd -r -M -s /sbin/nologin -d /usr/local/nginx nginx
+
+# Navigate to Nginx source directory and configure it.
+cd nginx-${VER1}
+
+./configure --user=nginx --group=nginx --with-pcre-jit --with-debug --with-compat \
+--with-http_ssl_module --with-http_realip_module --add-dynamic-module=/root/ModSecurity-nginx \
+--http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log
+
+# Compile and install Nginx on Ubuntu 22.05.
+make
+# Create dynamic modules;
+make modules
+# Install Nginx;
+make install
+ln -s /usr/local/nginx/sbin/nginx /usr/local/sbin/
+nginx -V
+
+
 
 # First, download the latest version of ModSecurity with the following command:
-wget https://github.com/owasp-modsecurity/ModSecurity/releases/download/v3.0.14/modsecurity-v3.0.14.tar.gz
+VER=3.0.14
+
+#wget https://github.com/owasp-modsecurity/ModSecurity/releases/download/v3.0.14/modsecurity-v3.0.14.tar.gz
+wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${VER}/modsecurity-v${VER}.tar.gz
 
 # extract the downloaded file with the following command:
-tar -xvzf modsecurity-v3.0.8.tar.gz
+tar xzf modsecurity-v${VER}.tar.gz
 
 # Next, navigate to the extracted directory and configure it with the following command:
-cd modsecurity-v3.0.8
+cd modsecurity-v${VER}
 ./build.sh
 ./configure
 
-#Bước 3: Cấu hình Nginx và ModSecurity
+# Next, install it with the following command:
+make
+make install
+
+#Bước 3: Cấu hình Nginx và ModSecurity 3.0.14: 
+cd ~
+git clone https://github.com/SpiderLabs/ModSecurity-nginx.git
+
 #1. Kích hoạt module ModSecurity trong Nginx bằng cách thêm đoạn mã sau vào cấu hình Nginx (/etc/nginx/nginx.conf): 
 # load_module modules/ngx_http_modsecurity_module.so;
 #2. Cấu hình ModSecurity:

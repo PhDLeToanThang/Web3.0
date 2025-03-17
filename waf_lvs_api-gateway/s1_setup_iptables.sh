@@ -1,4 +1,4 @@
-# Phần 1. Các bước cài đặt cấu hình ubuntu 22.04 LTS server với modsecurity WAF nginx và iptables, tc
+# Phần 1. Các bước cài đặt cấu hình ubuntu 22.04 LTS server với nginx và iptables, tc
 # Để cài đặt và cấu hình Ubuntu Server 22.04 LTS với ModSecurity WAF (Web Application Firewall) trên Nginx và sử dụng iptables và tc (traffic control) để
 # quản lý giao thông mạng, bạn có thể tuân theo các bước sau:
 
@@ -6,7 +6,7 @@
 # Tải xuống và cài đặt Ubuntu Server 22.04 LTS trên máy chủ của bạn.
 # Chạy các bước cài đặt cơ bản như cấu hình mạng, tạo người dùng, vv.
 
-#Bước 2: Cài đặt Nginx và ModSecurity
+#Bước 2: Cài đặt Nginx và iptables
 #1. Cài đặt Nginx trên Ubuntu Server
 sudo apt update -y
 sudo apt list --upgradable 
@@ -14,31 +14,7 @@ sudo apt autoremove -y
 sudo apt update -y
 sudo apt install nginx -y
 
-# install other required packages with the following command:
-sudo apt install g++ flex bison curl apache2-dev doxygen libyajl-dev ssdeep liblua5.2-dev libgeoip-dev libtool dh-autoreconf libcurl4-gnutls-dev libxml2 libpcre++-dev libxml2-dev git liblmdb-dev libpkgconf3 lmdb-doc pkgconf zlib1g-dev libssl-dev -y
-
-#2. Cài đặt ModSecurity: wget https://nginx.org/download/
-wget https://nginx.org/download/nginx-1.27.4.tar.gz
-
-# First, download the latest version of ModSecurity with the following command:
-wget https://github.com/owasp-modsecurity/ModSecurity/releases/download/v3.0.14/modsecurity-v3.0.14.tar.gz
-
-# extract the downloaded file with the following command:
-tar -xvzf modsecurity-v3.0.8.tar.gz
-
-# Next, navigate to the extracted directory and configure it with the following command:
-cd modsecurity-v3.0.8
-./build.sh
-./configure
-
-#Bước 3: Cấu hình Nginx và ModSecurity
-#1. Kích hoạt module ModSecurity trong Nginx bằng cách thêm đoạn mã sau vào cấu hình Nginx (/etc/nginx/nginx.conf): 
-# load_module modules/ngx_http_modsecurity_module.so;
-#2. Cấu hình ModSecurity:
-# Tạo file cấu hình ModSecurity: /etc/nginx/modsec/main.conf.
-# Cấu hình ModSecurity để bảo vệ ứng dụng web của bạn.
-
-#Bước 4: Cài đặt và Cấu hình iptables và tc
+#Bước 3: Cài đặt và Cấu hình iptables và tc
 #1. Cài đặt iptables:
 sudo apt install iptables
 
@@ -51,9 +27,7 @@ sudo apt install iproute2
 #4. Cấu hình tc để quản lý băng thông mạng:
 #Sử dụng tc để quản lý và giám sát băng thông mạng cho các giao thức cụ thể hoặc phân loại lưu lượng.
 
-#Bước 5: Khởi động lại Nginx và iptables
-#1. Khởi động lại dịch vụ Nginx để áp dụng cấu hình mới:
-sudo systemctl restart nginx
+#Bước 4: Khởi động lại iptables
 #2. Lưu cấu hình iptables:
 sudo iptables-save > /etc/iptables/rules.v4
 
@@ -68,15 +42,14 @@ sudo iptables-save > /etc/iptables/rules.v4
 # công cụ quản lý bảo mật như Webmin hoặc Cockpit. Dưới đây là hướng dẫn cài đặt và sử dụng Webmin để quản lý các phần mềm này trên Ubuntu Linux:
 # 1. Cài đặt Webmin trên Ubuntu Linux:
 # 1.1.Cập nhật hệ thống:
-sudo apt update
-sudo apt upgrade
+sudo apt update -y
+sudo apt upgrade -y
 # 1.2.Cài đặt các gói cần thiết trước khi cài Webmin:
 sudo apt install software-properties-common apt-transport-https wget
 # 1.3.Thêm kho lưu trữ của Webmin vào hệ thống:
 wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] http://download.webmin.com/download/repository sarge contrib"
 # 1.4. Cài đặt Webmin:
-sudo apt update
 sudo apt install webmin
 # Truy cập vào giao diện Webmin thông qua trình duyệt web bằng cách truy cập vào địa chỉ: https://your_server_ip:10000
 # 2. Sử dụng Webmin để quản lý iptables, ModSecurity và iproute2:
