@@ -173,10 +173,8 @@ sudo iptables-save > /etc/iptables/rules.v4
 # Cấu hình UFW cho UDP Port Range từ 34800 đến 43000 và Server 192.168.10.37/24:
 # Mở UDP port range từ 34800 đến 43000
 # Cho phép truy cập trực tiếp vào server VPS có IP LAN 192.168.10.37
-# Cho phép truy cập qua UDP port range từ 16378 tới 34579
-iptables -A INPUT -p udp --dport 16378:34579 -j ACCEPT
-
-# Cho phép truy cập tới server VPS có IP LAN 192.168.1.25
+# Cho phép truy cập qua UDP port range từ 16378 tới 34579 # Cho phép truy cập tới server VPS có IP LAN 192.168.1.25
+iptables -A INPUT -p udp --dport 16378:32768 -j ACCEPT 
 iptables -A INPUT -s 192.168.1.25 -j ACCEPT
 
 # Quản lý UDP port range từ 34800 đến 43000 và truy cập tới server VPS có IP LAN 192.168.10.37

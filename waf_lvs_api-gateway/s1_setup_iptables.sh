@@ -40,9 +40,9 @@ sudo apt install iproute2
 
 ### 1. Cấm truy cập tất cả các kết nối từ internet WAN vào các máy chủ
 
-sudo iptables -A INPUT -i ens192 -j DROP
+#sudo iptables -A INPUT -i ens192 -j DROP
 
-# * Trong đó `ens192` là giao diện kết nối với Internet (WAN).
+# Trong đó `ens192` là giao diện kết nối với Internet (WAN).
 
 ### 2. Cho phép truy cập từ internet WAN qua giao thức UDP port range từ 16378 đến 32768 tới server VPS có địa chỉ IP LAN 192.168.100.14
 
