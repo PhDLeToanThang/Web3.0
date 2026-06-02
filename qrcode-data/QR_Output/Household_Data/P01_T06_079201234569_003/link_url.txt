@@ -1,0 +1,3 @@
+URL truy cap: https://survey.xxx/data/P01_T06/P01_T06_079201234569_003
+Network path: file:///SERVER/Survey_Data/P01_T06/P01_T06_079201234569_003
+Folder local: QR_Output\Household_Data\P01_T06_079201234569_003
