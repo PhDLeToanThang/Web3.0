@@ -4,7 +4,7 @@
 > **Ngôn ngữ:** HTML5 + CSS3 + JavaScript (Vanilla)  
 > **Thư viện QR:** [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (CDN)  
 > **Nền tảng:** Web Browser (Chrome / Firefox / Edge / Safari)  
-> **Dựa trên tài liệu:** [Web3.0/qrcode_color_logo_otp-code](https://github.com/PhDLeToanThang/Web3.0/tree/main/qrcode_color_logo_otp-code)
+> **Dựa trên tài liệu:** [Web3.0/qrcode_color_logo_otp-code](https://github.com/PhDLeToanThang/Web3.0/blob/main/qrcode_color_logo_otp-code/readme_old.md)
 
 ---
 
@@ -340,7 +340,7 @@ Hiện tại chỉ hỗ trợ xuất PNG. Có thể mở rộng thêm:
 
 ## License
 
-MIT License — dựa trên tài liệu gốc của **Phd. Le Toan Thang** tại [Web3.0 Repository](https://github.com/PhDLeToanThang/Web3.0/tree/main/qrcode_color_logo_otp-code).
+MIT License — dựa trên tài liệu gốc của **Phd. Le Toan Thang** tại [Web3.0 Repository](https://github.com/PhDLeToanThang/Web3.0/blob/main/qrcode_color_logo_otp-code/readme_old.md).
 
 ---
 
