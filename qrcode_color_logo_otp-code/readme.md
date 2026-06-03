@@ -1,226 +1,347 @@
-# Part 1: python or php language for Qrcode + color + logo center with otp pincode, GPS, Format ATCOntime ?
+# QR Code Color OTP Server
 
-## Mục tiêu chính của Qrcode:
+> **Phiên bản:** 1.0.0  
+> **Ngôn ngữ:** HTML5 + CSS3 + JavaScript (Vanilla)  
+> **Thư viện QR:** [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (CDN)  
+> **Nền tảng:** Web Browser (Chrome / Firefox / Edge / Safari)  
+> **Dựa trên tài liệu:** [Web3.0/qrcode_color_logo_otp-code](https://github.com/PhDLeToanThang/Web3.0/tree/main/qrcode_color_logo_otp-code)
 
-1. Qrcode có Color để làm đẹp, gây ấn tượng, nhưng thực chất là để tạo sự khác biệt, nhận dạng nhanh, độ chính xác đòi hỏi các scan camera nhận biết chi tiết, chống fake.
+---
 
-1. Qrcode có Logo mầu để làm nhận biết rõ cho mắt người, scan/camera phân biệt các mặt hàng, chủng loại, thương hiệu của các Tổ chức Doanh nghiệp làm hàng có xuất sứ.
+## Mục lục
 
-1. Qrcode cung cấp trong Cổng thông tin "Qrcode generate Portal" theo ngôn ngữ Python AI hoặc Laraven PHP để dễ tùy biến theo cá nhân: lưu /xóa/sửa lại kết quả/ data để người dùng kiểm soát được Qrcode.
+- [Tổng quan](#tổng-quan)
+- [Cấu trúc thư mục](#cấu-trúc-thư-mục)
+- [Yêu cầu hệ thống](#yêu-cầu-hệ-thống)
+- [Cài đặt & Chạy](#cài-đặt--chạy)
+- [Hướng dẫn sử dụng các Form](#hướng-dẫn-sử-dụng-các-form)
+  - [Tab 1: Basic — QR Code cơ bản](#tab-1-basic--qr-code-cơ-bản)
+  - [Tab 2: OTP — Mã xác thực một lần](#tab-2-otp--mã-xác-thực-một-lần)
+  - [Tab 3: GPS — Tọa độ định vị](#tab-3-gps--tọa-độ-định-vị)
+  - [Tab 4: ATCOntime — Blueprint Scan](#tab-4-atcontime--blueprint-scan)
+- [Khai thác nâng cao](#khai-thác-nâng-cao)
+- [Tùy chỉnh & Phát triển](#tùy-chỉnh--phát-triển)
+- [License](#license)
 
-1. Qrcode nhận dạng PinCode cho OTP (One-Time Password) pincode giúp người dùng hoặc Quản trị CNTT thuận tiện thêm Tài khoản có dùng tOTP/HOTP vào các Authenticator Apps Mobile.
+---
 
-1. Qrcode có dùng thuật toán GPS và Format ATCOntime để tạo mã Blueprint Scan fastest Object khi dán nó trên các phương tiện di chuyển nhằm định vị không dừng , giúp người tìm vị trí cứu hộ, tìm cơ sở cứu thương, hầm trú ẩn tránh động đất, sóng thần. 
+## Tổng quan
 
+**QR Code Color OTP Server** là một ứng dụng web client-side (chạy hoàn toàn trên trình duyệt, không cần server backend) cho phép:
 
-## Vai trò 1: Qrcode tự sinh ra mã "QR Code Generation":
-You want to create a QR code using either Python or PHP.
-The QR code should be colorful and have a logo in the center.
-Additional Requirements:
-The QR code should incorporate an OTP (One-Time Password) pincode.
-Let’s tackle this step by step:
+1. **Tạo mã QR màu sắc** với tùy chọn màu nền, màu foreground.
+2. **Chèn Logo** vào trung tâm mã QR (hỗ trợ định dạng PNG, JPG, SVG).
+3. **Tích hợp OTP (One-Time Password)** — sinh URL `otpauth://` tương thích Google Authenticator, Authy, Microsoft Authenticator.
+4. **Tích hợp GPS** — sinh mã QR chứa tọa độ địa lý (`geo:` URI), hỗ trợ định vị cứu hộ.
+5. **Tích hợp ATCOntime** — format dữ liệu Blueprint Scan cho phương tiện di chuyển, hầm trú ẩn.
+6. **Xuất file PNG** — tải mã QR đã tạo về máy.
 
-### QR Code Generation viết bằng ngôn ngữ Python:
-For Python, you have a couple of options:
+### Đối tượng sử dụng
 
-Using pyqrcode with Logo:
-You can use the pyqrcode module to generate a QR code and then overlay a logo on it.
-Here’s an example of how to create a QR code with a centered logo using pyqrcode:
+- **IT Administrators** — tạo mã OTP cho người dùng thiết lập Authenticator.
+- **Marketing** — tạo mã QR có thương hiệu (logo + màu sắc công ty).
+- **Logistics** — tạo mã QR định vị cho phương tiện, kho bãi.
+- **Cứu hộ khẩn cấp** — tạo mã QR chứa tọa độ nơi trú ẩn.
 
-```Python
+---
 
-import pyqrcode
-from PIL import Image
+## Cấu trúc thư mục
 
-# Generate the QR code
-data = "Hello World!!"
-qr_code = pyqrcode.create(data)
-qr_code.png('xyz.png', scale=10)
-
-# Open the QR code image
-qr_image = Image.open('xyz.png')
-qr_image = qr_image.convert("RGBA")
-
-# Load your logo image
-logo = Image.open('logo.png')
-
-# Define the position for the logo (centered)
-box = (135, 135, 235, 235)
-
-# Resize the logo to fit the specified box
-logo = logo.resize((box[2] - box[0], box[3] - box[1]))
-
-# Paste the logo onto the QR code
-qr_image.paste(logo, box)
-
-# Display the final QR code with the logo
-qr_image.show()
+```
+QRcode_Color_Otp_Server/
+├── index.html              # Trang giao diện chính
+├── readme.md               # Tài liệu hướng dẫn (file này)
+├── css/
+│   └── style.css           # Định nghĩa giao diện (responsive, modern)
+├── js/
+│   └── script.js           # Logic xử lý QR code, màu sắc, OTP, GPS, ATCOntime
+└── images/
+    ├── favicon.ico          # Icon tab trình duyệt
+    └── default-logo.png     # Logo mặc định (có thể dùng làm mẫu)
 ```
 
-_Tham khảo ví dụ: https://github.com/lincolnloop/python-qrcode_
+---
 
-### Có thể dùng AI-generated sinh mã:
+## Yêu cầu hệ thống
 
-Using External Libraries:
-There are other Python libraries like Pillow (PIL) that allow you to manipulate images and overlay logos. You can create a QR code using any QR code library and then use Pillow to add the logo.
-QR Code Generation in PHP
-For PHP, you can explore existing libraries that support QR code generation:
+| Yêu cầu | Mô tả |
+|---------|-------|
+| **Trình duyệt** | Chrome 90+, Firefox 90+, Edge 90+, Safari 15+ |
+| **JavaScript** | Bật (bắt buộc) |
+| **Kết nối Internet** | Cần lần đầu để tải thư viện `qrcode-generator` từ CDN (sau đó có thể cache) |
+| **Geolocation** | (Tùy chọn) — cần cấp quyền nếu dùng "Use My Location" |
 
-zxpsuper/qrcode-with-logos:
-This GitHub repository provides a plugin for creating QR codes with logos. You can find it here: https://github.com/zxpsuper/qrcode-with-logos
-chillerlan/php-qrcode:
-Another option is the chillerlan/php-qrcode library, which is a PHP QR code generator and reader. You can find it here: https://github.com/chillerlan/php-qrcode
+---
 
-Remember to adjust the code snippets according to your specific requirements, such as incorporating the OTP pincode.
+## Cài đặt & Chạy
 
+### Cách 1: Chạy trực tiếp từ file (không cần cài đặt)
 
-## Vai trò 2: Cổng thông tin "Qrcode generate Portal" Users from URL and logo, colors in campaign | dynamic QRcode scan | QRcode hitmap | dashboard | multi-langauge:
+1. **Clone** hoặc **tải xuống** toàn bộ thư mục dự án.
+2. **Mở file `index.html`** bằng trình duyệt (double-click hoặc kéo thả vào tab trình duyệt).
+3. Ứng dụng hoạt động ngay lập tức — tất cả xử lý đều ở phía client (trình duyệt).
 
-✨Ngôn ngữ Laravel PHP làm QRCode Scan✨
-Dynamic QR code, logo QR code generate, tracking QR code scan, hitmap dashboard and admin panel using Laravel 7 framework, Vuexy template, endroid/qr-code library
-- sample code: https://github.com/hc0503/laravel-qrcode-campaign?tab=readme-ov-file 
+### Cách 2: Chạy với HTTP Server (khuyến nghị)
 
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/d8662cb0-ac07-4bcb-9175-179edd17cf11)
+Một số trình duyệt có thể hạn chế File API khi mở file trực tiếp (protocol `file://`).  
+Để đảm bảo logo upload hoạt động tốt nhất, nên dùng HTTP server:
 
+```bash
+# Dùng Python 3 (có sẵn trên hầu hết hệ thống)
+cd QRcode_Color_Otp_Server
+python -m http.server 8080
+# Mở trình duyệt: http://localhost:8080
 
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/9912829e-ea73-4562-b622-7aca43ac5fd5)
+# Hoặc dùng Node.js (nếu đã cài)
+npx http-server -p 8080
 
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/7cc905af-846f-4b35-ae4d-6db7949af4ff)
-
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/eb7913f8-9606-482c-a1ce-8259c87bd5a1)
-
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/3551e7f8-9c35-4639-afb0-9d57f666fab7)
- 
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/62e02c0e-056f-495d-b5a9-7803cef11f88)
-
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/03e54ed3-8cb7-4b15-8f5c-d310d337440b)
- 
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/20d38bf8-a904-4134-bfb6-69a0e1bc9ef9)
-
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/d2e6b06b-4f4e-4d4c-9f73-7b0195a859ce)
-
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/916d4c88-fafb-4bc1-b580-c5c9a5bebeac)
-
-
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/541cf74c-6b18-4b3e-8050-80810f8375a4)
-
-
-#### Ví dụ: Installation
-
-```Composer install
-$ composer install
-
-Laravel key generate
-$ php artisan key:generate
-
-Node module install
-$ npm i
-
-Mix build
-$ npm run dev
-
-Database migrate and seed
-$ php artisan migrate --seed
-
-Run server
-$ php artisan serve
+# Hoặc dùng PHP
+php -S localhost:8080
 ```
 
-## Vai trò 3: Qrcode generate tích hợp URL Shorten và Web Rest API giúp kiểm soát thay đổi URL ebook, file tài liệu điện tử:
+### Cách 3: Triển khai lên hosting
 
-### Rút ngắn URL "URL Shorten":
+Upload toàn bộ thư mục lên bất kỳ web server nào (Apache, Nginx, IIS) — không cần cấu hình đặc biệt, vì đây là static site thuần.
 
-1. Mã QR mã hóa mọi thứ dưới dạng văn bản, với giới hạn dung lượng nhất định.
+---
 
-- Để kết thúc một URL rất dài, chúng ta nên chuyển đổi nó thành một URL ngắn thông qua máy chủ của chúng tôi. chuyển đổi một URL dài như 'http://www.google.com/s...1000char...' thành '2vma.co/xdfeFx' rồi mã hóa nó thành mã QR trực quan.
+## Hướng dẫn sử dụng các Form
 
-1. Dịch mã QR "QR code translate":
+### Tab 1: Basic — QR Code cơ bản
 
-- Nhập mã QR và ảnh, mã hóa lại thành mã QR trực quan.
+![Basic Tab](https://via.placeholder.com/600x400/6C5CE7/FFFFFF?text=Basic+Tab+Preview)
 
-1. Tùy chỉnh các thông số cấu hình QRcode:
+#### Các trường nhập liệu
 
-- Bạn có thể nhập bất kỳ văn bản nào bạn muốn.
-Danh thiếp trực tuyến Bạn có thể chỉnh sửa danh thiếp và thiết kế mã QR cá nhân của mình, khi quét mã này, nó sẽ chuyển hướng đến danh thiếp noline của bạn.
+| Trường | Kiểu | Mô tả |
+|--------|------|-------|
+| **Data / URL** | Textarea (multi-line) | Nhập bất kỳ dữ liệu nào muốn mã hóa: URL, văn bản, số điện thoại, email... |
+| **Foreground Color** | Color picker + Text | Màu của các module (ô vuông) trong QR code. Mặc định: `#6C5CE7` (tím). |
+| **Background Color** | Color picker + Text | Màu nền của QR code. Mặc định: `#FFFFFF` (trắng). |
+| **Logo** | File input | Ảnh logo đặt ở trung tâm. Nhấn **Clear** để xóa. |
+| **QR Code Size** | Range slider (150–600px) | Kích thước cạnh của QR code xuất ra. |
+| **Auto short URL** | Checkbox | (Tính năng mở rộng) — đánh dấu để kích hoạt rút gọn URL. |
 
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/0c41618b-d093-4cb8-83bd-16d0a9edef7d)
-_ví dụ_
+#### Quy trình sử dụng
 
-_Tài liệu tham khảo:_
-- Halftone QR Code: http://www0.cs.ucl.ac.uk/staff/n.mitra/research/halftone_QR/paper_docs/halftoneQR_sigga13.pdf
-- qrencode: https://github.com/fukuchi/libqrencode
-- vCode: https://github.com/ruitaocc/vCode
-- ví dụ code về Laraven PHP Qrcode: https://code-boxx.com/generate-qr-code-php/  hoặc https://github.com/psyon/php-qrcode 
+1. Nhập dữ liệu vào ô **Data / URL**.
+2. Chọn màu sắc phù hợp với thương hiệu.
+3. (Tùy chọn) Upload logo.
+4. Điều chỉnh kích thước.
+5. Nhấn **Generate** → QR code hiển thị ở khung Preview bên phải.
+6. Nhấn **Download PNG** để tải xuống.
 
-1. Các trang web .net, Wordpress, IIS re-write URL thường có vấn đề với permater Link, hoặc đường link rất dài hoặc có mã ascii unicode utf 8 ...
+#### Mẹo
 
-   - Sau khi công bố, public hoặc copy link cho mọi người hoặc robot index search một thời gian, thì sự cố hoặc xóa mất link hoặc thay máy chủ DB ...
-   - Những cuốn sách ebook, pdf, tài liệu dạng chia sẻ chỉ đọc, không cho tải xuống, những tài liệu vẫn được hosting chia sẻ online và thay đổi nội dung nhưng không thay URL...
-   - Các tài liệu hướng dẫn sử dụng, công bố, tiếp thị sản phẩm của các hãng công nghệ, bán buôn/bán lẻ, bán /cho thuê sách điện tử trực tuyến thay đổi tài liệu ...
-   - Thư viện điện tử của các Trường phổ thông, Cao đẳng, Đại học, Viện nghiên cứu được các tổ chức KHCN quốc tế công như: F.A.O, I.C.C, UNESCO, WCCO, WTO ... 
+- **Error Correction Level H** (cao nhất) được sử dụng mặc định, cho phép logo che phủ ~25% diện tích mà vẫn quét được.
+- Nên chọn màu **foreground tối** và **background sáng** để tương phản tốt, đảm bảo scan được.
+- Logo được tự động cắt tròn và viền trắng để nổi bật trên nền QR.
 
-_ví dụ:_Tham khảo các Source code về URL Shortener: https://github.com/topics/url-shortener?l=php
+---
 
-_Tài liệu tham khảo: https://github.com/realodix/urlhub_
+### Tab 2: OTP — Mã xác thực một lần
 
-1. Các tính năng chính trong URL Shortener có tích hợp Qrcode:
+![OTP Tab](https://via.placeholder.com/600x400/00b894/FFFFFF?text=OTP+Tab+Preview)
 
-- Công cụ rút gọn liên kết đáng tin cậy: Thực hiện công việc rất tốt và rất nhất quán. UrlHub chắc chắn là một trong những công cụ rút ngắn URL tự lưu trữ đáng tin cậy nhất hiện có. Muốn giới thiệu một cách dễ dàng.
-- URL tùy chỉnh (ví dụ: example.com/laravel): Cho phép người dùng tạo các URL ngắn mang tính mô tả hơn thay vì kết hợp các chữ cái và số được tạo ngẫu nhiên.
-  
-- Trình tạo mã QR cho mỗi liên kết ngắn: Cách nhanh nhất để truy cập dữ liệu này rất có thể là mở liên kết từ điện thoại. Mặc dù các URL ngắn rất thuận tiện cho việc nhập nhưng cách tiếp cận thuận tiện hơn để chuyển liên kết web sang điện thoại di động là thông qua quét mã QR.
-  
-- Chỉnh sửa hoặc xóa liên kết của bạn: Bạn có thể thay đổi cả địa chỉ và URL đích. Bạn thậm chí có thể xóa URL của mình, một tính năng không có sẵn ở hầu hết các trình rút ngắn.
-Xem nơi liên kết đi: Thật tốt khi biết liên kết đi đến đâu trước khi nhấp vào nó để bạn có thể tránh các liên kết sơ sài.
+Tính năng này tạo mã QR tương thích chuẩn **TOTP/HOTP** (RFC 6238 / RFC 4226) — có thể quét bằng Google Authenticator, Authy, Microsoft Authenticator, 1Password, Bitwarden.
 
-- Ẩn danh IP (hoặc che giấu IP) [tùy chọn]: Ẩn danh địa chỉ của khách truy cập ngay khi khả thi về mặt kỹ thuật ở giai đoạn sớm nhất có thể của mạng thu thập. Địa chỉ IP đầy đủ không bao giờ được ghi vào đĩa trong trường hợp này. Tính năng này được thiết kế để giúp chủ sở hữu trang web tuân thủ chính sách quyền riêng tư của riêng họ, khuyến nghị từ cơ quan bảo vệ dữ liệu địa phương và các quy định pháp lý như GDPR, có thể ngăn việc lưu trữ thông tin địa chỉ IP đầy đủ.
+#### Các trường nhập liệu
 
-- Sức mạnh tùy chỉnh: Bạn có muốn trang web của mình chỉ dành cho bạn sử dụng để không ai có thể đăng ký không? Không có gì. Nó nằm trong cấu hình. Người dùng phải đăng ký để tạo URL ngắn? Không sao đâu. Nó nằm trong cấu hình. Từ tệp cấu hình, bạn có thể chỉnh sửa mọi thứ trên trang web của mình. 
-- Danh sách có thể sắp xếp các URL rút ngắn cùng bảng dữ liệu của từng Users.
-- Giao diện hiện đại và đơn giản hóa quản lý của từng Portal user cá nhân hóa.
+| Trường | Kiểu | Mô tả |
+|--------|------|-------|
+| **OTP Type** | Select (TOTP / HOTP) | **TOTP**: dựa trên thời gian (30s). **HOTP**: dựa trên bộ đếm (counter). |
+| **Issuer** | Text | Tên tổ chức / ứng dụng (VD: GitHub, Google, MyApp). |
+| **Account Name** | Text | Tên tài khoản người dùng (VD: `user@example.com`). |
+| **Secret Key** | Text (monospace) | Khóa bí mật dạng **Base32**. Nhấn **Generate** để tự sinh ngẫu nhiên 32 ký tự. |
+| **Digits** | Select (6 / 8) | Số chữ số của mã OTP. |
+| **Period** | Select (30 / 60) | Chu kỳ làm mới OTP (chỉ áp dụng cho TOTP). |
+| **Counter** | Number | Giá trị bộ đếm (chỉ áp dụng cho HOTP). |
 
+#### Quy trình sử dụng
 
-# Part 2: Cách sử dụng Mã QR tùy chỉnh với API Logo bằng Python, PHP, Ruby, Javascript ứng dụng trong Thương mại điện tử:
+1. Chọn **OTP Type** (thường để TOTP).
+2. Nhập **Issuer** (VD: `Công ty ABC`).
+3. Nhập **Account Name** (VD: `nguyenvana@abc.com`).
+4. Nhập **Secret Key** hoặc nhấn **Generate** để tự sinh.
+5. Chọn **Digits** (6) và **Period** (30).
+6. Nhấn **Apply OTP Data to QR**.
+   - Hệ thống tự động sinh URL dạng:  
+     `otpauth://totp/Công+ty+ABC:nguyenvana@abc.com?secret=JBSWY3DPEHPK3PXP&issuer=Công+ty+ABC&algorithm=SHA1&digits=6&period=30`
+   - Dữ liệu được điền vào ô **Data/URL** ở Tab Basic.
+7. Chuyển sang Tab Basic, chọn màu sắc, logo, kích thước.
+8. Nhấn **Generate** → tạo QR code OTP.
+9. Quét mã bằng Authenticator App trên điện thoại.
 
-![image](https://github.com/PhDLeToanThang/Web3.0/assets/106635733/edd2c6ff-94ef-4ff6-bcca-0b3d19b87957)
+#### Kiểm tra OTP
 
-- Mã QR (Mã phản hồi nhanh) được sử dụng trong nhiều ứng dụng để cho phép người dùng truy cập thông tin ngay lập tức. Thế giới gần đây đã bắt đầu sử dụng mã QR trong các siêu thị và các cửa hàng bán lẻ khác để hỗ trợ truy tìm dấu vết tiếp xúc với Covid-19. Điều này có nghĩa là nhu cầu về nhiều ứng dụng để tạo điều kiện tạo mã QR thuận tiện ngày càng tăng.
+Sau khi quét, app Authenticator sẽ hiển thị mã 6 số thay đổi mỗi 30 giây. Dùng Secret Key đã tạo để xác thực OTP trên server của bạn.
 
-- May mắn thay, một số API cung cấp khả năng đó. Mã QR tùy chỉnh với API Logo là một trong những API như vậy cho phép bạn tạo mã QR tùy chỉnh.
+---
 
-## Mã QR tùy chỉnh với API Logo là gì?
+### Tab 3: GPS — Tọa độ định vị
 
-- Mã QR tùy chỉnh với API logo cho phép tạo mã QR độc đáo, chất lượng cao với logo, màu sắc, thiết kế và hình dạng tùy chỉnh. Bạn cũng có thể xuất hình ảnh mã QR đầu ra ở nhiều định dạng khác nhau như PNG, SVG, PDF và EPS. Hơn nữa, API này cho phép tạo mã QR trong suốt tùy chỉnh có thể được sử dụng làm lớp phủ cho bất kỳ nền nào.
+![GPS Tab](https://via.placeholder.com/600x400/e17055/FFFFFF?text=GPS+Tab+Preview)
 
-- Mã QR tùy chỉnh với API Logo là API trả phí với ba gói giá để bạn lựa chọn. Nó hỗ trợ nhiều ngôn ngữ lập trình, bao gồm Python, PHP, Ruby và Javascript. Trong bài viết này, chúng ta sẽ xem cách sử dụng API này với nhiều ngôn ngữ lập trình.
+Tạo mã QR chứa tọa độ địa lý — hữu ích cho định vị cứu hộ, tìm điểm đến, quản lý tài sản ngoài hiện trường.
 
-## Mã QR tùy chỉnh với API Logo hoạt động như thế nào?
+#### Các trường nhập liệu
 
-- Mã QR tùy chỉnh với API logo sử dụng logic API đơn giản để gửi yêu cầu và nhận được phản hồi cần thiết. Khi gửi yêu cầu, nó bao gồm các tham số xác thực như khóa API và máy chủ lưu trữ để cho phép máy chủ xác định đó là yêu cầu hợp lệ. Phần nội dung của yêu cầu API chứa các tham số bắt buộc, trong đó chỉ định chi tiết tùy chỉnh để tạo mã QR. Khi máy chủ API đã nhận và xử lý yêu cầu, nó sẽ gửi phản hồi thích hợp cho máy khách ở định dạng JSON.
+| Trường | Kiểu | Mô tả |
+|--------|------|-------|
+| **Latitude** | Number (decimal) | Vĩ độ. VD: `10.8231` (TP. HCM). |
+| **Longitude** | Number (decimal) | Kinh độ. VD: `106.6297` (TP. HCM). |
+| **Location Name** | Text | Tên địa điểm (tùy chọn). VD: `Landmark 81, HCMC`. |
 
-- Nó sẽ hiển thị các thông tin cần thiết nếu yêu cầu thành công. Ví dụ: mã QR được tạo sẽ là phản hồi thành công của yêu cầu được gửi đến điểm cuối tạo mã QR. Nếu yêu cầu không hợp lệ hoặc không thành công, tải trọng phản hồi sẽ chứa mã lỗi và thông tin chi tiết.
+#### Quy trình sử dụng
 
-## Đối tượng mục tiêu cho Mã QR tùy chỉnh với API Logo
+**Cách 1 — Nhập thủ công:**
+1. Nhập **Latitude** và **Longitude**.
+2. (Tùy chọn) Nhập **Location Name**.
+3. Nhấn **Apply GPS Data to QR**.
+   - URL sinh ra dạng: `geo:10.8231,106.6297?q=Landmark%2081%2C%20HCMC`
+4. Chuyển sang Tab Basic, tùy chỉnh màu sắc, logo.
+5. Nhấn **Generate**.
 
-### Nhà tiếp thị/Nhà quảng cáo
-Nhiều thương hiệu đã chuyển sang sử dụng mã QR có thương hiệu từ mã QR đen trắng truyền thống do giao diện hấp dẫn của chúng. API này cung cấp khả năng tương tự mà họ cần. Khi sử dụng API này, nhà tiếp thị và nhà quảng cáo có thể tạo mã QR đầy màu sắc, bao gồm logo công ty và sử dụng chúng trong các tài liệu tiếp thị và quảng cáo như áp phích, biểu ngữ, thẻ và tài liệu quảng cáo để quảng bá doanh nghiệp và tạo nhận thức về thương hiệu.
+**Cách 2 — Dùng định vị trình duyệt:**
+1. Nhấn **Use My Location**.
+2. Trình duyệt yêu cầu cấp quyền truy cập vị trí → chọn **Allow**.
+3. Tọa độ hiện tại tự động điền vào các ô.
+4. Nhấn **Apply GPS Data to QR**.
 
-### Thực thể kinh doanh
-API này cho phép các doanh nghiệp sử dụng logo của họ với mã QR, nghĩa là họ có thể có mã QR trông chuyên nghiệp với nhận dạng duy nhất. Vì vậy, Khách hàng có thể dễ dàng nhận ra thương hiệu của mình và cảm nhận được sự an tâm. Do đó, họ có thể sử dụng các mã QR này trong trang web trực tuyến của mình cho nhiều mục đích khác nhau như hướng khách hàng đến trang web, thanh toán, v.v. Ngoài ra, doanh nghiệp có thể sử dụng API này để thiết kế danh thiếp và sử dụng chúng trong bao bì.
+#### Ứng dụng thực tế
 
-### Nhà bán lẻ: Cửa hàng Dược phẩm, Các mặt hàng cần đóng gói thủ công - nông thổ - thủy hải sản/ đóng gói dây chuyền - mì - đồ hộp - bao bì:
-Trong kỷ nguyên Covid-19 này, mã QR đã trở thành một yếu tố thiết yếu đối với các nhà bán lẻ vì nó cung cấp một cơ chế không cần chạm để cấp quyền truy cập vào các cửa hàng bán lẻ. Các nhà bán lẻ yêu cầu mã QR tùy chỉnh để duy trì chất lượng khi in. Do đó, API này rất hữu ích đối với họ vì nó cho phép tạo ngay mã QR tùy chỉnh với chất lượng cao cho mục đích in ấn.
+- **Cứu hộ động đất / sóng thần:** Dán mã QR tại hầm trú ẩn, quét để biết tọa độ chính xác.
+- **Quản lý đội xe:** Mỗi phương tiện gắn mã QR chứa GPS bãi đỗ.
+- **Du lịch:** Biển chỉ dẫn điểm tham quan kèm tọa độ.
 
-_Tham khảo: https://rapidapi.com/blog/custom-qr-code-with-logo-api-with-python-php-ruby-javascript-examples/_
+---
 
-#### License The MIT License
-Copyright © 2005 all contributors.
-Editor: Phd. Le Toan Thang
+### Tab 4: ATCOntime — Blueprint Scan
+
+![ATCOntime Tab](https://via.placeholder.com/600x400/fdcb6e/333333?text=ATCOntime+Tab+Preview)
+
+Format dữ liệu dành cho **Blueprint Scan** — quét nhanh các đối tượng di chuyển (phương tiện, container, tài sản) phục vụ logistics và cứu hộ.
+
+#### Các trường nhập liệu
+
+| Trường | Kiểu | Mô tả |
+|--------|------|-------|
+| **ATCO Code** | Text | Mã định danh ATCO. VD: `ATCO:123456789`. |
+| **Vehicle / Object ID** | Text | ID phương tiện hoặc đối tượng. VD: `BUS-01`, `SHELTER-A12`. |
+| **Destination / Route** | Text | Điểm đến hoặc tuyến đường. |
+| **Latitude** | Number | Vĩ độ hiện tại của đối tượng. |
+| **Longitude** | Number | Kinh độ hiện tại của đối tượng. |
+| **Timestamp** | Datetime-local | Thời gian ghi nhận (mặc định: thời điểm hiện tại). |
+
+#### Định dạng dữ liệu ATCOntime
+
+Khi nhấn **Apply ATCOntime Data to QR**, dữ liệu được format theo cấu trúc:
+
+```
+ATCO:<code>|VEHICLE:<id>|DEST:<destination>|GPS:<lat>,<lng>|TIME:<ISO-timestamp>
+```
+
+Ví dụ:
+```
+ATCO:123456789|VEHICLE:BUS-01|DEST:Emergency Shelter Zone A|GPS:10.8231,106.6297|TIME:2026-06-03T09:20:00.000Z
+```
+
+#### Quy trình sử dụng
+
+1. Nhập **ATCO Code** và/hoặc **Vehicle ID** (bắt buộc ít nhất một).
+2. Nhập các thông tin còn lại (tùy chọn).
+3. Nhấn **Apply ATCOntime Data to QR**.
+4. Chuyển sang Tab Basic để tùy chỉnh giao diện và Generate.
+
+---
+
+## Khai thác nâng cao
+
+### 1. Tạo QR cho WiFi
+
+Nhập trực tiếp vào ô **Data / URL** ở Tab Basic:
+```
+WIFI:S:MyNetwork;T:WPA;P:MyPassword;;
+```
+
+### 2. Tạo QR cho vCard (danh thiếp)
+
+```
+BEGIN:VCARD
+VERSION:3.0
+FN:Nguyen Van A
+ORG:Cong ty ABC
+TEL:0901234567
+EMAIL:nguyenvana@abc.com
+END:VCARD
+```
+
+### 3. Tạo QR cho Email
+
+```
+mailto:nguyenvana@abc.com?subject=Hello&body=Test
+```
+
+### 4. Tạo QR cho SMS
+
+```
+sms:0901234567?body=Hello
+```
+
+### 5. Kết hợp URL Shorten
+
+Để tạo mã QR từ URL ngắn:
+1. Rút gọn URL bằng dịch vụ như [UrlHub](https://github.com/realodix/urlhub) hoặc Bitly.
+2. Nhập URL ngắn vào ô Data / URL.
+3. Generate QR code.
+
+---
+
+## Tùy chỉnh & Phát triển
+
+### Màu sắc chủ đạo
+
+Mở `css/style.css`, tìm biến `--primary`:
+
+```css
+:root {
+    --primary: #6C5CE7;  /* Đổi sang màu thương hiệu của bạn */
+    --success: #00b894;
+    --danger: #e17055;
+}
+```
+
+### Thay đổi Error Correction Level
+
+Mở `js/script.js`, tìm dòng:
+
+```javascript
+const qr = qrcode(0, 'H');
+```
+
+| Ký tự | Mức sửa lỗi | Khôi phục tối đa |
+|-------|-------------|-------------------|
+| `L` | Low | ~7% |
+| `M` | Medium | ~15% |
+| `Q` | Quartile | ~25% |
+| `H` | High | ~30% |
+
+> Nếu không dùng logo, có thể giảm xuống `M` hoặc `Q` để tăng dung lượng lưu trữ.
+
+### Thêm định dạng xuất file
+
+Hiện tại chỉ hỗ trợ xuất PNG. Có thể mở rộng thêm:
+
+- **SVG:** vẽ lại QR code bằng SVG thay vì Canvas.
+- **PDF:** dùng thư viện `jspdf` + `html2canvas`.
+- **EPS:** dùng thư viện chuyên dụng.
+
+---
+
+## License
+
+MIT License — dựa trên tài liệu gốc của **Phd. Le Toan Thang** tại [Web3.0 Repository](https://github.com/PhDLeToanThang/Web3.0/tree/main/qrcode_color_logo_otp-code).
+
+---
+
+*Xây dựng cho Web3.0 — QR Code thế hệ mới với màu sắc, logo, OTP và định vị.*

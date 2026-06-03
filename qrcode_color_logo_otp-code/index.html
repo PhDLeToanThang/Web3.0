@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Color OTP Server</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%236C5CE7'/%3E%3Crect x='4' y='4' width='10' height='10' rx='1' fill='%23fff'/%3E%3Crect x='18' y='4' width='10' height='10' rx='1' fill='%23fff'/%3E%3Crect x='4' y='18' width='10' height='10' rx='1' fill='%23fff'/%3E%3Crect x='18' y='18' width='4' height='4' rx='1' fill='%23fff'/%3E%3Crect x='24' y='18' width='4' height='4' rx='1' fill='%23fff'/%3E%3Crect x='18' y='24' width='4' height='4' rx='1' fill='%23fff'/%3E%3Crect x='24' y='24' width='4' height='4' rx='1' fill='%23fff'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="logo-icon">
+                    <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="6" fill="#6C5CE7"/>
+                        <rect x="4" y="4" width="10" height="10" rx="1.5" fill="white"/>
+                        <rect x="18" y="4" width="10" height="10" rx="1.5" fill="white"/>
+                        <rect x="4" y="18" width="10" height="10" rx="1.5" fill="white"/>
+                        <rect x="18" y="18" width="4" height="4" rx="1" fill="white"/>
+                        <rect x="24" y="18" width="4" height="4" rx="1" fill="white"/>
+                        <rect x="18" y="24" width="4" height="4" rx="1" fill="white"/>
+                        <rect x="24" y="24" width="4" height="4" rx="1" fill="white"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>QR Code Color OTP Server</h1>
+                    <p class="header-subtitle">Generate beautiful QR codes with colors, logos, OTP & GPS data</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="tabs-container">
+                <nav class="tabs-nav" role="tablist">
+                    <button class="tab-btn active" data-tab="basic" role="tab" aria-selected="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="7" width="4" height="4"/><rect x="7" y="13" width="4" height="4"/><rect x="13" y="13" width="4" height="4"/></svg>
+                        Basic
+                    </button>
+                    <button class="tab-btn" data-tab="otp" role="tab" aria-selected="false">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        OTP
+                    </button>
+                    <button class="tab-btn" data-tab="gps" role="tab" aria-selected="false">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        GPS
+                    </button>
+                    <button class="tab-btn" data-tab="atcontime" role="tab" aria-selected="false">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 2v4M16 2v4M2 10h20"/></svg>
+                        ATCOntime
+                    </button>
+                </nav>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-basic" role="tabpanel">
+                        <div class="form-group">
+                            <label for="qr-data">Data / URL</label>
+                            <textarea id="qr-data" rows="3" placeholder="Enter text, URL, or any data to encode..." spellcheck="false"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="fg-color">Foreground Color</label>
+                                <div class="color-picker-wrap">
+                                    <input type="color" id="fg-color" value="#6C5CE7">
+                                    <input type="text" id="fg-color-hex" value="#6C5CE7" maxlength="7">
+                                </div>
+                            </div>
+                            <div class="form-group half">
+                                <label for="bg-color">Background Color</label>
+                                <div class="color-picker-wrap">
+                                    <input type="color" id="bg-color" value="#FFFFFF">
+                                    <input type="text" id="bg-color-hex" value="#FFFFFF" maxlength="7">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qr-logo">Logo (optional)</label>
+                            <div class="file-input-wrap">
+                                <input type="file" id="qr-logo" accept="image/*">
+                                <button type="button" class="btn-outline" id="clear-logo">Clear</button>
+                            </div>
+                            <div id="logo-preview" class="logo-preview hidden">
+                                <img id="logo-preview-img" alt="Logo preview">
+                                <span id="logo-filename"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qr-size">QR Code Size</label>
+                            <div class="range-wrap">
+                                <input type="range" id="qr-size" min="150" max="600" value="300" step="10">
+                                <span id="qr-size-value">300px</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="url-shorten">
+                                <span class="checkbox-custom"></span>
+                                Auto-generate short URL (via UrlHub API)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab-otp" role="tabpanel">
+                        <p class="tab-description">Generate OTP Auth QR code for Authenticator apps (Google Authenticator, Authy, etc.)</p>
+                        <div class="form-group">
+                            <label for="otp-type">OTP Type</label>
+                            <select id="otp-type">
+                                <option value="totp">TOTP (Time-based)</option>
+                                <option value="hotp">HOTP (Counter-based)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="otp-issuer">Issuer</label>
+                            <input type="text" id="otp-issuer" placeholder="e.g. GitHub, Google, MyApp">
+                        </div>
+                        <div class="form-group">
+                            <label for="otp-account">Account Name</label>
+                            <input type="text" id="otp-account" placeholder="e.g. user@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="otp-secret">Secret Key (Base32)</label>
+                            <div class="secret-input-wrap">
+                                <input type="text" id="otp-secret" placeholder="e.g. JBSWY3DPEHPK3PXP" style="font-family: monospace;">
+                                <button type="button" class="btn-outline" id="gen-secret">Generate</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="otp-digits">Digits</label>
+                                <select id="otp-digits">
+                                    <option value="6">6</option>
+                                    <option value="8">8</option>
+                                </select>
+                            </div>
+                            <div class="form-group half">
+                                <label for="otp-period">Period (sec)</label>
+                                <select id="otp-period">
+                                    <option value="30">30</option>
+                                    <option value="60">60</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="hotp-counter-group" style="display:none;">
+                            <label for="otp-counter">Counter</label>
+                            <input type="number" id="otp-counter" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn-secondary" id="apply-otp">Apply OTP Data to QR</button>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab-gps" role="tabpanel">
+                        <p class="tab-description">Encode GPS coordinates for navigation, emergency rescue, or location sharing.</p>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="gps-lat">Latitude</label>
+                                <input type="number" id="gps-lat" step="any" placeholder="e.g. 10.8231">
+                            </div>
+                            <div class="form-group half">
+                                <label for="gps-lng">Longitude</label>
+                                <input type="number" id="gps-lng" step="any" placeholder="e.g. 106.6297">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gps-label">Location Name (optional)</label>
+                            <input type="text" id="gps-label" placeholder="e.g. Landmark 81, HCMC">
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn-secondary" id="apply-gps">Apply GPS Data to QR</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn-outline" id="get-current-location">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Use My Location
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab-atcontime" role="tabpanel">
+                        <p class="tab-description">ATCOntime format for Blueprint Scan — used for fast object detection on moving vehicles and emergency shelter定位.</p>
+                        <div class="form-group">
+                            <label for="atco-code">ATCO Code</label>
+                            <input type="text" id="atco-code" placeholder="e.g. ATCO:123456789">
+                        </div>
+                        <div class="form-group">
+                            <label for="atco-vehicle">Vehicle / Object ID</label>
+                            <input type="text" id="atco-vehicle" placeholder="e.g. BUS-01, SHELTER-A12">
+                        </div>
+                        <div class="form-group">
+                            <label for="atco-destination">Destination / Route</label>
+                            <input type="text" id="atco-destination" placeholder="e.g. Emergency Shelter Zone A">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="atco-lat">Latitude</label>
+                                <input type="number" id="atco-lat" step="any" placeholder="10.8231">
+                            </div>
+                            <div class="form-group half">
+                                <label for="atco-lng">Longitude</label>
+                                <input type="number" id="atco-lng" step="any" placeholder="106.6297">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="atco-timestamp">Timestamp</label>
+                            <input type="datetime-local" id="atco-timestamp">
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn-secondary" id="apply-atco">Apply ATCOntime Data to QR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="preview-container">
+                <div class="preview-header">
+                    <h2>Preview</h2>
+                    <div class="preview-actions">
+                        <button class="btn-primary" id="generate-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="7" width="4" height="4"/><rect x="7" y="13" width="4" height="4"/><rect x="13" y="13" width="4" height="4"/></svg>
+                            Generate
+                        </button>
+                        <button class="btn-success" id="download-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Download PNG
+                        </button>
+                    </div>
+                </div>
+                <div class="preview-area" id="preview-area">
+                    <div class="preview-placeholder" id="preview-placeholder">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="7" width="4" height="4"/><rect x="7" y="13" width="4" height="4"/><rect x="13" y="13" width="4" height="4"/></svg>
+                        <p>Configure your QR code and click <strong>Generate</strong></p>
+                    </div>
+                    <canvas id="qr-canvas" class="hidden"></canvas>
+                </div>
+                <div class="preview-info hidden" id="preview-info">
+                    <div class="info-row">
+                        <span class="info-label">Data Type</span>
+                        <span class="info-value" id="info-type">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Content</span>
+                        <span class="info-value info-content" id="info-content">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Dimensions</span>
+                        <span class="info-value" id="info-dimensions">—</span>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="app-footer">
+            <p>QR Code Color OTP Server &mdash; Built with &hearts; for Web3.0</p>
+        </footer>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
