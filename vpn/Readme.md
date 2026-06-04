@@ -1,74 +1,419 @@
-#  Phần 1. Cloud VPN Gateway for Enterprise:
-**Xây dựng lại VPN Enterprise for BaaS, Console, Control DC**
-   Install and Configure Pritunl VPN server on Ubuntu 20.04
-In our guide today, we are looking at how to install Pritunl VPN server on Ubuntu 20.04/22.04 LTS. Pritunl VPN is an opensource VPN server and management system. It utilizes a graphical interface that is friendly and easy to use to the user. It is secure and provides a good alternative to the commercial VPN products. It has the ability to create a wide range of cloud vpn networks which can support over a thousands of users.
+# Hướng dẫn cài đặt và cấu hình Pritunl VPN Server & Client
 
-**Features of Pritunl VPN:**
-Below are the most notable features of Pritunl VPN that makes it an option for many:
+## Mục lục
 
-1. Simple to install and configure
-2. Supports multi-cloud VPN peering
-3. Offers upto five layers of authentication making it more secure.
-4. Supports Wireguard, giving clients theoption to connect with openvpn or Wireguard
-5. Quickly and easily scale to thousands of users, having high availability in the cloud environment without the need for expensive proprietary hardware
-    supports all OpenVPN clients with official clients for most devices and platforms.
-6. Create multi-cloud site-to-site links with VPC peering. VPC peering available for AWS, Google Cloud, Azure and Oracle Cloud.
-7. Interconnect AWS VPC networks across AWS regions and provide reliable remote access with automatic failover that can scale horizontally
-8. Pritunl is built on MongoDB, a reliable and scalable database that can be quickly deployed
+1. [Cài đặt Pritunl Server trên Ubuntu 24.04 LTS](#1-cài-đặt-pritunl-server-trên-ubuntu-2404-lts)
+2. [Cài đặt Pritunl Server trên Oracle Linux 9](#2-cài-đặt-pritunl-server-trên-oracle-linux-9)
+3. [Cấu hình ban đầu (Web UI)](#3-cấu-hình-ban-đầu-web-ui)
+4. [Cấu hình Routes (Split-Tunneling)](#4-cấu-hình-routes-split-tunneling)
+5. [Cấu hình Pritunl Client Windows](#5-cấu-hình-pritunl-client-windows)
+6. [Troubleshooting - Mất Internet khi bật VPN](#6-troubleshooting---mất-internet-khi-bật-vpn)
+7. [Troubleshooting - Disconnect/Reconnect liên tục](#7-troubleshooting---disconnectreconnect-liên-tục)
+8. [Troubleshooting - Let's Encrypt SSL](#8-troubleshooting---lets-encrypt-ssl)
+9. [Logs và Debug](#9-logs-và-debug)
 
-**Pritunl VPN Architecture Review:**
-Pritunl VPN presents an distributed and scalable infrastructure that quickly and easily scale to thousands of users, having high availability in the cloud environment without the need for expensive proprietary hardware. It works on server-client architecture, where servers and users are configured on the VPN server and clients profiles are downloaded to be used on the clients.
-Pritunl is built on MongoDB, a reliable and scalable database that can be quickly deployed. With built in support for replication a reliable database can be setup in minutes making a Pritunl cluster deployment fast and easy.
+---
 
-![image](https://user-images.githubusercontent.com/106635733/208446860-c3a5bcf6-600d-4e5b-81c0-76fdec869ac2.png)
-Installing Pritunl VPN server on Ubuntu 20.04 To install Pritunl VPN server on Ubuntu 20.04, we are going to follow a number of steps as stated below:
+## 1. Cài đặt Pritunl Server trên Ubuntu 24.04 LTS
 
-wget https://raw.githubusercontent.com/PhDLeToanThang/Web3.0/main/vpn/vpnenterprise.sh && bash vpnenterprise.sh
+### Yêu cầu
+- Ubuntu 24.04 LTS (Noble) - clean install
+- RAM tối thiểu: 2GB (khuyến nghị 4GB+)
+- IP public tĩnh (hoặc NAT với port forwarding)
+- Firewall mở các cổng: `22`, `443`, `1194/udp` (OpenVPN), `51820/udp` (WireGuard)
 
+### Cách 1: Dùng script tự động
 
-#  Phần 2. Veeam Powered Network (VeeamPN) for Veeam Backup
-If you follow Veeam, you have certainly not missed quite a few blog posts about Veeam PN (Powered Network) software. Already during VeeamON 2017, we could see a functional demo, but the solution was not GA at that time. Now Veeam has finally released the final version of Veeam PN and it's available from Azure Marketplace (Hub Appliance) and as an OVA package for local deployment (Site Gateway).
-The product can be used to easily setup VPN connections over a public network.
+```bash
+# Copy script lên server, cấp quyền và chạy
+chmod +x vpnenterprise-ubuntu24.sh
+sudo ./vpnenterprise-ubuntu24.sh
+```
 
-VeeamPN At the heart of this new solution is Veeam PN, which extends an on-premises network to an Azure network, enhancing the ability to back up anything, anywhere and restore to Azure. It's designed to simplify and automate the setup of a data recovery site in Microsoft Azure.
+### Cách 2: Cài thủ công từng bước
 
-There are two different connection scenarios possible, depending what you need/want to do:
-    Site-to-site VPN between company offices and a Microsoft Azure network to which VMs restored in Microsoft Azure are connected.
-    Point-to-site VPN between remote computers and a Microsoft Azure network to which VMs restored in Microsoft Azure are connected.
+```bash
+# 1. Cập nhật hệ thống
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl gnupg2 wget unzip software-properties-common
 
-**There are Two components of Veeam PN:**
-1. Hub Appliance – deployable from Azure Marketplace
-2. Site Gateway –  downloadable from the Veeam.com website and deployed on-premises
-The architecture overview below can give you more details.
+# 2. Thêm GPG keys (dùng gpg --dearmor thay vì apt-key deprecated)
+curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc \
+  | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor --yes
 
-![image](https://user-images.githubusercontent.com/106635733/207789463-6a9595e3-a225-4f8b-b1cd-9d734d737a5a.png)
+curl -fsSL https://swupdate.openvpn.net/repos/repo-public.gpg \
+  | sudo gpg -o /usr/share/keyrings/openvpn-repo.gpg --dearmor --yes
 
-**Veeam PN – The Features:**
-1. Provides seamless and secure networking between on-premises and Azure-based IT resources
-2. Delivers easy-to-use and fully automated site-to-site network connectivity between any site
-3. Designed for both SMB and enterprise customers, as well as service providers
-Here is another picture from Veeam PN user guide:
+curl -fsSL https://raw.githubusercontent.com/pritunl/pgp/master/pritunl_repo_pub.asc \
+  | sudo gpg -o /usr/share/keyrings/pritunl.gpg --dearmor --yes
 
-![image](https://user-images.githubusercontent.com/106635733/207789750-7feb6230-01e1-43cf-961b-1484ffc4a36e.png)
+# 3. Thêm repositories cho Ubuntu 24.04 (noble)
+sudo tee /etc/apt/sources.list.d/mongodb-org.list << EOF
+deb [ signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse
+EOF
 
-**Veeam PN System Requirements:**
-**1. Network Hub:**
-  whether installed At Azure or On-premises (for site-to-site scenario) needs to run on at least ESXi/vSphere 5.0 or higher (hardware version 8 or later), needs 1Gb of RAM. For “point-to-site” scenario you need Microsoft Azure account in order to be able to set up an A1 VM at least (1 core, 1.75 GB memory, 70 GB of disk space).
+sudo tee /etc/apt/sources.list.d/openvpn.list << EOF
+deb [ signed-by=/usr/share/keyrings/openvpn-repo.gpg ] https://build.openvpn.net/debian/openvpn/stable noble main
+EOF
 
-**2.Site Gateway:**
- The on-premise part also called Site Gateway is an appliance which has a disk size of 3.9Gb (thin provisioned) or 16Gb thick.
-Veeam has an online user guide for Veeam PN where you can follow the different configuration steps or how-tos.
+sudo tee /etc/apt/sources.list.d/pritunl.list << EOF
+deb [ signed-by=/usr/share/keyrings/pritunl.gpg ] https://repo.pritunl.com/stable/apt noble main
+EOF
 
-Check it out here.
-- Few other fellow bloggers, including Anthony Spiteri at Veeam blog (link below), has already written about Veeam PN. As being said, the product is now GA, so go and download your copy to test it out.
-- Veeam PN enables organizations to use Microsoft Azure for restoring their data and ensure business continuity without the need for a dedicated recovery site. If you have a remote site, you won't need Azure.
+# 4. Cài đặt
+sudo apt update
+sudo apt install -y pritunl openvpn mongodb-org wireguard wireguard-tools
 
-**Sum-up:**
-It also simplifies the configuration and deployment of the restoration site with the new Veeam PN (Powered Network), which is a complete networking solution. You can also use Veeam PN for easy migrations of your local workloads into Microsoft Azure.
+# 5. Start services
+sudo systemctl start mongod pritunl
+sudo systemctl enable mongod pritunl
+```
 
-**Tham khảo hướng dẫn cài VeeamPN:**
-https://thangletoan.wordpress.com/2021/08/16/cai-va-cau-hinh-openvpn-va-wire-guard-tren-ubuntu-server-18-04-dap-ung-nhu-cau-wfh/
+### Cấu hình Firewall (UFW)
 
+```bash
+# KHÔNG bật UFW nếu dùng Pritunl (Pritunl tự quản lý iptables)
+# Nếu bắt buộc dùng UFW:
+sudo ufw disable
+```
 
-**Link Download VeeamPN OVA (Virtual Machine):**
-https://1drv.ms/u/s!AtT2yQnThe-ykLYa3oyYiYyPk5Pp6A?e=HtPWlU
+> **Lưu ý quan trọng**: Pritunl tự quản lý iptables rules. Nếu dùng UFW hoặc firewalld, có thể gây xung đột. Khuyến nghị **tắt UFW** (`sudo ufw disable`).
+
+---
+
+## 2. Cài đặt Pritunl Server trên Oracle Linux 9
+
+```bash
+# 1. Thêm repository MongoDB 8.0
+sudo tee /etc/yum.repos.d/mongodb-org.repo << EOF
+[mongodb-org-8.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/9/mongodb-org/8.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://pgp.mongodb.com/server-8.0.asc
+EOF
+
+# 2. Thêm repository Pritunl
+sudo tee /etc/yum.repos.d/pritunl.repo << EOF
+[pritunl]
+name=Pritunl Repository
+baseurl=https://repo.pritunl.com/stable/yum/oraclelinux/9/
+gpgcheck=1
+enabled=1
+gpgkey=https://raw.githubusercontent.com/pritunl/pgp/master/pritunl_repo_pub.asc
+EOF
+
+# 3. Tắt firewalld (xung đột với iptables của Pritunl)
+sudo dnf -y remove iptables-services
+sudo systemctl stop firewalld.service
+sudo systemctl disable firewalld.service
+
+# 4. Cài đặt
+sudo dnf -y update
+sudo dnf -y install pritunl pritunl-openvpn wireguard-tools mongodb-org
+
+# 5. Start services
+sudo systemctl enable mongod pritunl
+sudo systemctl start mongod pritunl
+```
+
+---
+
+## 3. Cấu hình ban đầu (Web UI)
+
+Sau khi cài xong, truy cập: `https://<IP_SERVER>`
+
+### Bước 1: Lấy setup-key
+```bash
+sudo pritunl setup-key
+```
+Nhập key này vào trình duyệt.
+
+### Bước 2: Lấy mật khẩu mặc định
+```bash
+sudo pritunl default-password
+```
+Đăng nhập với username: `pritunl` và password nhận được. Đổi mật khẩu ngay sau đó.
+
+### Bước 3: Tạo Organization & User
+- **Users** → **Add Organization** → Đặt tên (VD: `my-org`)
+- **Add User** → Nhập Name, Email (tùy chọn), PIN (tùy chọn)
+
+### Bước 4: Tạo Server
+- **Servers** → **Add Server**
+- Cấu hình:
+  - **Port**: để random hoặc chọn cố định
+  - **Protocol**: `udp` (khuyến nghị)
+  - **Virtual Network**: `10.10.10.0/24` (OpenVPN)
+  - **Virtual WG Network**: `10.11.11.0/24` (WireGuard)
+  - **DNS Server**: `8.8.8.8`
+- **Attach Organization** → chọn organization vừa tạo
+- **Start Server**
+
+### Bước 5: Download profile
+- **Users** → click icon download bên cạnh user → chọn định dạng `.pritunl` hoặc `.ovpn`
+
+---
+
+## 4. Cấu hình Routes (Split-Tunneling)
+
+**Split-Tunneling** cho phép vừa truy cập VPN vừa dùng internet thường qua Wi-Fi.
+
+### Cấu hình trên Web UI (Servers → chọn server → Routes)
+
+| Action | Chi tiết |
+|--------|----------|
+| **XÓA** `0.0.0.0/0` | Route này bắt buộc **toàn bộ** traffic qua VPN → mất internet cục bộ |
+| **THÊM** `10.10.10.0/24` | OpenVPN LAN - Bật NAT Route |
+| **THÊM** `10.11.11.0/24` | WireGuard LAN - Bật NAT Route |
+| **THÊM** `192.168.100.0/24` | Mạng nội bộ đích - Bật NAT Route |
+
+> **Giải thích**: Khi xóa `0.0.0.0/0`, VPN chỉ route các dải mạng được liệt kê. Traffic tới các IP khác (VD: google.com, facebook.com) sẽ đi qua default gateway Wi-Fi của máy bạn.
+
+### NAT Route là gì?
+
+- **Bật** (checked): Pritunl tự động NAT traffic từ VPN client ra mạng đích. Phù hợp nếu router vật lý không có static route trỏ về VPN.
+- **Tắt**: Cần configure static route trên router vật lý của mạng đích trỏ về IP của Pritunl server.
+
+---
+
+## 5. Cấu hình Pritunl Client Windows
+
+### Cài đặt
+
+Tải Pritunl Client cho Windows từ: https://client.pritunl.com/
+
+### Import Profile
+
+- Mở Pritunl Client
+- Kéo thả file `.pritunl` hoặc `.ovpn` vào cửa sổ
+- Hoặc click **+** → Import Profile → chọn file
+
+### Vị trí cấu hình DNS Mode (QUAN TRỌNG)
+
+Đây là hướng dẫn chi tiết từng bước:
+
+```
+Bước 1: Mở Pritunl Client (double-click icon trên system tray hoặc Start Menu)
+Bước 2: Click biểu tượng bánh răng ⚙ (Settings) ở góc dưới-bên trái
+Bước 3: Cửa sổ "Settings" hiện ra, chọn TAB "Advanced" (trên cùng)
+Bước 4: Tìm mục "DNS Mode" (dropdown list)
+          ┌──────────────────────────────────────────┐
+          │ DNS Mode: [ Proxy          ▼]           │
+          │           [7mChọn "Proxy"                 [0m│
+          │                                           │
+          │ DNS Server: [ 8.8.8.8        ]           │
+          └──────────────────────────────────────────┘
+Bước 5: Đặt DNS Mode = "Proxy" (quan trọng nhất)
+Bước 6: DNS Server = "8.8.8.8" (hoặc DNS server của bạn)
+Bước 7: Click "Save"
+```
+
+**Giải thích các tùy chọn DNS Mode:**
+| Mode | Hành vi |
+|------|---------|
+| **Proxy** (đúng) | DNS queries được proxy qua VPN server. Chỉ route DNS cho các dải mạng VPN, các domain khác dùng DNS internet thường |
+| VPN Only | Chỉ dùng DNS khi VPN kết nối, không phân giải được domain ngoài VPN |
+| Disabled | Không can thiệp DNS, dùng hoàn toàn DNS Windows |
+
+### Kiểm tra Route all traffic
+
+Trên **Server** (Web UI), không phải client:
+- **Servers** → chọn server → Tab **Settings** → Kiểm tra **"Route all traffic through VPN"**:
+  - Nếu **BẬT** → traffic toàn bộ đi VPN → tắt đi
+  - Nếu **TẮT** (chỉ route các dải được liệt kê trong Routes) → đúng
+
+### Reset Client về mặc định
+
+Nếu đã chỉnh lộn xộn và không nhớ đã sửa gì:
+
+```powershell
+# Đóng Pritunl Client hoàn toàn (thoát khỏi system tray)
+# Xóa thư mục cấu hình:
+Remove-Item -Recurse -Force "$env:APPDATA\pritunl"
+# Mở lại Pritunl Client và import lại profile
+```
+
+---
+
+## 6. Troubleshooting - Mất Internet khi bật VPN
+
+### Triệu chứng
+- Bật VPN → không vào được web (Facebook, Google, etc.)
+- Chỉ truy cập được các máy trong mạng VPN
+
+### Nguyên nhân số 1: Route `0.0.0.0/0` trên Server
+
+**Fix:**
+1. Vào **Servers** → chọn server → tab **Routes**
+2. Xóa route `0.0.0.0/0`
+3. Chỉ thêm các route cụ thể: `10.10.10.0/24`, `10.11.11.0/24`, `192.168.100.0/24`
+4. **Restart Server** (Stop rồi Start lại)
+
+### Nguyên nhân số 2: DNS Mode sai trên Client
+
+**Fix:**
+1. Mở Pritunl Client → ⚙ Settings → tab **Advanced**
+2. DNS Mode = **Proxy**
+3. Save
+
+### Nguyên nhân số 3: Xung đột Virtual Network với mạng LAN
+
+Kiểm tra: **Servers** → **Virtual Network** không được trùng với dải Wi-Fi của bạn.
+- Wi-Fi nhà thường dùng: `192.168.0.0/24` hoặc `192.168.1.0/24`
+- Nên dùng: `10.10.10.0/24` cho OpenVPN, `10.11.11.0/24` cho WireGuard
+
+### Kiểm tra nhanh bằng Command Prompt (Admin)
+
+```cmd
+# Sau khi kết nối VPN, kiểm tra routing table
+route print
+
+# Tìm dòng "0.0.0.0" - nếu có nhiều hơn 1 dòng với metric khác nhau
+# Gateway nào có metric thấp hơn sẽ được ưu tiên
+
+# Nếu VPN gateway có metric thấp hơn WiFi gateway:
+# → Toàn bộ traffic đi VPN → mất internet
+```
+
+---
+
+## 7. Troubleshooting - Disconnect/Reconnect liên tục
+
+### Nguyên nhân thường gặp
+
+| Nguyên nhân | Fix |
+|-------------|-----|
+| MTU issue (thường gặp khi chạy VM trên vSphere) | **MSS Fix**: vào Server Settings, đặt `1200`-`1400` |
+| Ping Timeout quá thấp | **Ping Interval** = `20`, **Ping Timeout** = `120` |
+| Firewall xung đột (UFW/firewalld + iptables) | `sudo ufw disable` hoặc `systemctl stop firewalld` |
+| ISP chặn/chèn VPN traffic | Thử chuyển protocol `udp` → `tcp`, đổi port |
+| Overloaded server (CPU/RAM/bandwidth) | Kiểm tra `htop`, `iftop`, dùng replication |
+
+### Cấu hình Ping trong Server Settings
+
+```
+Ping Interval: 20  (giây)
+Ping Timeout:  120 (giây)
+```
+
+Giá trị này giúp client chịu được các mất kết nối tạm thời (jitter, packet loss) mà không bị disconnect ngay.
+
+### Kiểm tra MTU từ Windows
+
+```cmd
+# Ping với kích thước gói khác nhau
+ping -f -l 1472 <IP_Pritunl_Server>
+ping -f -l 1392 <IP_Pritunl_Server>
+ping -f -l 1200 <IP_Pritunl_Server>
+
+# Nếu "Packet needs to be fragmented but DF set" → giảm MSS Fix
+```
+
+### Kiểm tra logs trên server
+
+```bash
+sudo journalctl -u pritunl -f
+# Hoặc
+sudo tail -f /var/log/pritunl.log
+```
+
+### Kiểm tra logs trên Windows client
+
+```
+C:\Users\<USERNAME>\AppData\Roaming\pritunl\pritunl-client.log
+C:\ProgramData\Pritunl\profiles\<PROFILE_ID>.log
+```
+
+---
+
+## 8. Troubleshooting - Let's Encrypt SSL
+
+### SSL hết hạn, đã renew nhưng vẫn disconnect
+
+```bash
+# Kiểm tra certificate
+sudo certbot certificates
+
+# Force renew nếu cần
+sudo certbot renew --force-renewal
+
+# Restart Pritunl để load certificate mới
+sudo systemctl restart pritunl
+
+# Kiểm tra log
+sudo journalctl -u pritunl -f --no-pager | grep -i cert
+```
+
+### Let's Encrypt root certificate fix (cho phép Ubuntu 24.04)
+
+```bash
+# Nếu gặp lỗi "certificate expired" trên client sau khi renew
+# Vào Web UI → Settings → SSL Certificate → dán nội dung cert mới
+# Hoặc dùng lệnh:
+sudo pritunl set app.server_ssl -force
+sudo systemctl restart pritunl
+```
+
+---
+
+## 9. Logs và Debug
+
+### Server Logs
+
+```bash
+# Real-time log
+sudo journalctl -u pritunl -f
+
+# Tìm lỗi
+sudo journalctl -u pritunl --no-pager | grep -i error
+
+# Log file
+sudo tail -f /var/log/pritunl.log
+```
+
+### Client Logs (Windows)
+
+| Log | Đường dẫn |
+|-----|-----------|
+| Service Log | `C:\ProgramData\Pritunl\pritunl-client.log` |
+| Interface Log | `%APPDATA%\pritunl\pritunl-client.log` |
+| Profile Log | `%APPDATA%\pritunl\profiles\<PROFILE_ID>.log` |
+| Profile Config | `%APPDATA%\pritunl\profiles\<PROFILE_ID>.ovpn` |
+
+### Mở Developer Tools (debug)
+
+Trên Windows, chạy trong terminal (đóng client trước):
+```cmd
+"C:\Program Files (x86)\Pritunl\pritunl.exe" --dev-tools
+```
+
+### Lệnh hữu ích trên server
+
+```bash
+# Kiểm tra port đang listen
+ss -antpl | grep -E "pritunl|mongod"
+
+# Kiểm tra routing
+ip route show
+
+# Kiểm tra iptables rules (Pritunl tự quản lý)
+sudo iptables -t nat -L -n -v
+
+# Kiểm tra MongoDB
+mongosh --eval "db.adminCommand('ping')"
+
+# Restart từng service
+sudo systemctl restart mongod
+sudo systemctl restart pritunl
+```
+
+---
+
+## Tham khảo
+
+- **Official Pritunl Docs**: https://docs.pritunl.com/docs
+- **Pritunl Client Download**: https://client.pritunl.com/
+- **Source gốc**: https://github.com/PhDLeToanThang/Web3.0/blob/main/vpn/vpnenterprise.sh
+- **MongoDB 8.0 Ubuntu**: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
