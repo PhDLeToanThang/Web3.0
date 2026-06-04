@@ -285,31 +285,98 @@ route print
 
 | Nguyên nhân | Fix |
 |-------------|-----|
-| MTU issue (thường gặp khi chạy VM trên vSphere) | **MSS Fix**: vào Server Settings, đặt `1200`-`1400` |
+| MTU issue (thường gặp khi chạy VM trên vSphere) | **MSS Fix**: xem hướng dẫn chi tiết bên dưới |
 | Ping Timeout quá thấp | **Ping Interval** = `20`, **Ping Timeout** = `120` |
 | Firewall xung đột (UFW/firewalld + iptables) | `sudo ufw disable` hoặc `systemctl stop firewalld` |
 | ISP chặn/chèn VPN traffic | Thử chuyển protocol `udp` → `tcp`, đổi port |
 | Overloaded server (CPU/RAM/bandwidth) | Kiểm tra `htop`, `iftop`, dùng replication |
 
-### Cấu hình Ping trong Server Settings
+---
+
+### Chi tiết: Cấu hình MSS Fix (MTU issue - Nguyên nhân số 1)
+
+MSS Fix là nguyên nhân **số 1** gây disconnect/reconnect khi chạy Pritunl trên VM vSphere.
+
+#### MSS là gì?
+
+| Thuật ngữ | Công thức | Ví dụ MTU 1500 |
+|-----------|-----------|----------------|
+| **MTU** | Kích thước tối đa 1 gói IP | 1500 |
+| **MSS** | **MTU - 40** (20 IP header + 20 TCP header) | 1460 |
+| **VPN overhead** | OpenVPN thêm ~60-70 byte header | - |
+| **MSS Fix** | MSS thực tế sau khi trừ overhead | **1400-1420** |
+
+> **Kết luận**: Với MTU 1500 chuẩn, sau khi trừ overhead OpenVPN, MSS Fix hợp lý là **1400-1420**.
+
+#### Vị trí cấu hình trong Web UI
 
 ```
-Ping Interval: 20  (giây)
-Ping Timeout:  120 (giây)
+Servers → Chọn server → Tab "Advanced" → Tìm "MSS Fix"
 ```
 
-Giá trị này giúp client chịu được các mất kết nối tạm thời (jitter, packet loss) mà không bị disconnect ngay.
+| Trường | Giá trị |
+|--------|---------|
+| Mặc định | `0` (auto) |
+| Giá trị cần nhập | `1400`-`1420` (cho MTU 1500, không có vấn đề) |
+| Giá trị test | `1200` (khi có disconnect, hạ xuống test) |
 
-### Kiểm tra MTU từ Windows
+#### Quy trình test và tối ưu
+
+```mermaid
+flowchart TD
+    A[Bị disconnect/reconnect] --> B[Đặt MSS Fix = 1200]
+    B --> C{Kết nối ổn định?}
+    C -->|Không| D[Kiểm tra Ping Timeout<br>hoặc Firewall]
+    C -->|Có| E[Đặt MSS Fix = 1300]
+    E --> F{Ổn định?}
+    F -->|Có| G[Đặt 1350 → 1400 → 1420]
+    F -->|Không| H[Giữ nguyên 1200-1300]
+    G --> I{Xuất hiện<br>disconnect lại?}
+    I -->|Có| H
+    I -->|Không| J[Giữ giá trị hiện tại]
+```
+
+#### Bảng giá trị tham khảo theo môi trường
+
+| Môi trường | MTU hiệu dụng | MSS Fix khuyến nghị |
+|-------------|---------------|---------------------|
+| Standard (không VM, không tunnel) | 1500 | 0 (auto) hoặc 1460 |
+| VM trên vSphere / Hyper-V | 1500 (có overhead) | **1400-1420** |
+| Cloud (AWS/GCP) overlay network | ~1420 | **1350-1380** |
+| PPPoE (DSLab/VNPT ADSL) | 1492 | **1400-1420** |
+| VPN qua VPN (double tunnel) | ~1300 | **1200-1250** |
+| Kết nối 4G/LTE | ~1400-1500 | **1350-1400** |
+
+#### Kiểm tra MTU từ Windows
 
 ```cmd
 # Ping với kích thước gói khác nhau
+ping -f -l 1500 <IP_Pritunl_Server>
 ping -f -l 1472 <IP_Pritunl_Server>
 ping -f -l 1392 <IP_Pritunl_Server>
 ping -f -l 1200 <IP_Pritunl_Server>
 
-# Nếu "Packet needs to be fragmented but DF set" → giảm MSS Fix
+# Nếu thấy "Packet needs to be fragmented but DF set"
+# → gói tin quá lớn, cần giảm MSS Fix
 ```
+
+#### Lưu ý quan trọng
+
+- Sau khi thay đổi **MSS Fix**, bạn cần **Restart Server** (Stop → Start) để áp dụng
+- Không cần re-download profile client
+- Giá trị MSS Fix áp dụng cho cả OpenVPN và WireGuard
+
+---
+
+### Cấu hình Ping trong Server Settings
+
+```
+Servers → Chọn server → Tab "Settings" → Tìm:
+  Ping Interval: 20  (giây)
+  Ping Timeout:  120 (giây)
+```
+
+Giá trị này giúp client chịu được các mất kết nối tạm thời (jitter, packet loss) mà không bị disconnect ngay. Mặc định thường là 10/60, nâng lên 20/120 cho kết nối kém ổn định.
 
 ### Kiểm tra logs trên server
 
